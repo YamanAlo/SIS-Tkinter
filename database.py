@@ -1,15 +1,24 @@
-import sqlite3 
+import sqlite3
 
 class StudentInfoSystem:
-
     def __init__(self):
         self.conn = None
         self.cursor = None
 
     @staticmethod
-
     def connect():
         return sqlite3.connect('StudentInfoSystem.db')
+
+    def __enter__(self):
+        self.conn = self.connect()
+        self.cursor = self.conn.cursor()
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        if self.conn:
+            self.conn.commit()
+            self.conn.close()
+
 
    
     def create_database(self):
@@ -43,12 +52,13 @@ class StudentInfoSystem:
         self.conn.commit()
         self.conn.close()
 
-    def add_student(self,student_id, first_name, last_name, email, phone, address, city):
+    def add_student(self, first_name, last_name, email, phone, address, city):
         self.conn = self.connect()
         self.cursor = self.conn.cursor()
-        self.cursor.execute("INSERT INTO student VALUES (NULL,?, ?, ?, ?, ?, ?, ?)", (student_id,first_name, last_name, email, phone, address or None, city or None))
+        self.cursor.execute("INSERT INTO student VALUES (NULL, ?, ?, ?, ?, ?, ?)", (first_name, last_name, email, phone, address or None, city or None))
         self.conn.commit()
         self.conn.close()
+
 
     def add_course(self, course_name, course_code, course_description):
         self.conn = self.connect()
@@ -131,5 +141,7 @@ class StudentInfoSystem:
         self.conn.close()
     
     def __del__(self):
-        self.conn.close()
+        if self.conn is not None:
+         self.conn.close()
+
     
