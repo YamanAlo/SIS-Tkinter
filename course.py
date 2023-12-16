@@ -1,7 +1,6 @@
 import customtkinter
-import database
 
-class CourseManagementWindow(customtkinter.CTkToplevel):
+class CourseManagementWindow(customtkinter.CTk):
     def __init__(self):
         super().__init__()
         self.title("Course Management")
@@ -13,11 +12,11 @@ class CourseManagementWindow(customtkinter.CTkToplevel):
         self.course_name_entry = customtkinter.CTkEntry(self)
         self.course_name_entry.pack(pady=10)
 
-        # Teacher Name
-        self.teacher_name_label = customtkinter.CTkLabel(self, text="Teacher Name")
-        self.teacher_name_label.pack(pady=10)
-        self.teacher_name_entry = customtkinter.CTkEntry(self)
-        self.teacher_name_entry.pack(pady=10)
+        # Course Code
+        self.course_code_label = customtkinter.CTkLabel(self, text="Course Code")
+        self.course_code_label.pack(pady=10)
+        self.course_code_entry = customtkinter.CTkEntry(self)
+        self.course_code_entry.pack(pady=10)
 
         # Add Course Button
         self.add_course_button = customtkinter.CTkButton(self, text="Add Course", command=self.add_course)
@@ -28,6 +27,6 @@ class CourseManagementWindow(customtkinter.CTkToplevel):
 
     def add_course(self):
         course_name = self.course_name_entry.get()
-        teacher_name = self.teacher_name_entry.get()
+        course_code = self.teacher_name_entry.get()
         # Logic to add course to the database
-        print(f"Adding Course: {course_name}, Teacher: {teacher_name}")
+        print(f"Adding Course: {course_name}, Course Code: {course_code}")
