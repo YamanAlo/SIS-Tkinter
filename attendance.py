@@ -30,4 +30,4 @@ class AttendanceTrackingWindow(customtkinter.CTkToplevel):
         # Logic to record attendance in the database
         print(f"Record Attendance: {status} for Student: {student} on {date}")
 
-# Opened from the Dashboard Window
+

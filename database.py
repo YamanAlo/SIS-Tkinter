@@ -52,10 +52,25 @@ class StudentInfoSystem:
         self.conn.commit()
         self.conn.close()
 
-    def add_student(self, first_name, last_name, email, phone, address, city):
+    def clear_database(self):
+        '''Clears all data from the database'''
         self.conn = self.connect()
         self.cursor = self.conn.cursor()
-        self.cursor.execute("INSERT INTO student VALUES (NULL, ?, ?, ?, ?, ?, ?)", (first_name, last_name, email, phone, address or None, city or None))
+        query = '''DELETE FROM student'''
+        self.cursor.execute(query)
+        query = '''DELETE FROM courses'''
+        self.cursor.execute(query)
+        query = '''DELETE FROM enrollment'''
+        self.cursor.execute(query)
+        self.conn.commit()
+        self.conn.close()
+        
+
+
+    def add_student(self, student_id ,first_name, last_name, email, phone, address, city):
+        self.conn = self.connect()
+        self.cursor = self.conn.cursor()
+        self.cursor.execute("INSERT INTO student VALUES (?, ?, ?, ?, ?, ?, ?)", (student_id ,first_name, last_name, email, phone, address or None, city or None))
         self.conn.commit()
         self.conn.close()
 
