@@ -2,6 +2,7 @@ import customtkinter
 from tkinter import messagebox, simpledialog, Menu
 from tkinter import ttk
 from database import StudentInfoSystem
+import CTkMessagebox as msg
 
 class CourseListWindow(customtkinter.CTkToplevel):
     def __init__(self, parent, db):
@@ -75,21 +76,21 @@ class CourseListWindow(customtkinter.CTkToplevel):
     def save_changes(self, edit_window, course_id, new_name, new_code):
         # Validate data entry
         if not new_name or not new_code:
-            messagebox.showerror("Error", "Please enter both Course Name and Course Code.")
+            msg.CTkMessagebox(title = "Error", message= "Please enter both Course Name and Course Code." , icon = "cancel")
             return
 
         # Validate course name (no numbers allowed)
         if any(char.isdigit() for char in new_name):
-            messagebox.showerror("Error", "Course Name should not contain numbers.")
+            msg.CTkMessagebox(title = "Error", message = "Course Name should not contain numbers.", icon = "cancel")
             return
 
         try:
             self.db.update_course(course_id, new_name, new_code, "")
-            messagebox.showinfo("Success", "Course updated successfully.")
+            msg.CTkMessagebox(title = "Success",message= "Course updated successfully.", icon = "check", option_1 = "Thanks")
             self.show_course_list()  # Refresh the course list after update
             edit_window.destroy()  # Close the edit window
         except Exception as e:
-            messagebox.showerror("Error", f"Failed to update course: {str(e)}")
+            messagebox.showerror(title= "Error", message= "Failed to update course.", icon = "cancel")
 
 
     def delete_course(self, course_id):
@@ -138,20 +139,20 @@ class CourseManagementWindow(customtkinter.CTkToplevel):
 
         # Validate data entry
         if not course_name or not course_code:
-            messagebox.showerror("Error", "Please enter both Course Name and Course Code.")
+            msg.CTkMessagebox(title="Error", message="Please enter both Course Name and Course Code.", icon="cancel")
             return
 
         # Validate course name (no numbers allowed)
         if any(char.isdigit() for char in course_name):
-            messagebox.showerror("Error", "Course Name should not contain numbers.")
+            msg.CTkMessagebox(title = "Error", message= "Course Name should not contain numbers.", icon = "cancel")
             return
 
         # Add course to the database
         try:
             self.db.add_course(course_name, course_code, "")
-            messagebox.showinfo("Success", "Course added successfully.")
+            msg.CTkMessagebox(title= "Success",message= "Course added successfully.", icon="check", option_1="Thanks")
         except Exception as e:
-            messagebox.showerror("Error", f"Failed to add course: {str(e)}")
+            msg.CTkMessagebox(title="Error", message= f"Failed to add course: {str(e)}", icon="cancel")
 
     def show_course_list(self):
         course_list_window = CourseListWindow(self, self.db)
