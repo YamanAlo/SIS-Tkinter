@@ -23,8 +23,8 @@ class DashboardWindow(customtkinter.CTk):
         self.course_mgmt_button = customtkinter.CTkButton(self, text="Course Management", command=self.open_course_mgmt)
         self.course_mgmt_button.pack(pady=10)
 
-        # Button for Grades Management
-        self.grades_mgmt_button = customtkinter.CTkButton(self, text="Grades Management", command=self.open_grades_mgmt)
+        # Button for Enrollment Management
+        self.grades_mgmt_button = customtkinter.CTkButton(self, text="Enrollment Management", command=self.open_grades_mgmt)
         self.grades_mgmt_button.pack(pady=10)
 
         # Button for Attendance Tracking

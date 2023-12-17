@@ -1,32 +1,48 @@
 import customtkinter
-import database
+from database import StudentInfoSystem
+
 class GradesManagementWindow(customtkinter.CTkToplevel):
     def __init__(self):
         super().__init__()
-        self.title("Grades Management")
+        self.title("Enrollment Management")
         self.geometry("600x500")
 
-        # Dropdowns or entry fields for selecting student and course
-        # You'll need to populate these from your database
+        # Create an instance of StudentInfoSystem as an instance variable
+        self.db = StudentInfoSystem()
+
+        # Dropdowns for selecting student and course
         self.student_selector = customtkinter.CTkComboBox(self)
+        self.populate_student_selector()  # Call method to populate student dropdown
         self.student_selector.pack(pady=5)
 
         self.course_selector = customtkinter.CTkComboBox(self)
+        self.populate_course_selector()  # Call method to populate course dropdown
         self.course_selector.pack(pady=5)
 
-        # Entry for grade
-        self.grade_entry = customtkinter.CTkEntry(self)
-        self.grade_entry.pack(pady=5)
+        # Button to enroll the student
+        self.enroll_student_button = customtkinter.CTkButton(self, text="Enroll Student", command=self.enroll_student)
+        self.enroll_student_button.pack(pady=10)
 
-        # Button to assign/update grade
-        self.assign_grade_button = customtkinter.CTkButton(self, text="Assign Grade", command=self.assign_grade)
-        self.assign_grade_button.pack(pady=10)
+    def populate_student_selector(self):
+        students = self.db.get_students()
+        student_ids = [str(student[0]) for student in students]
+        self.student_selector.set(student_ids)
 
-    def assign_grade(self):
-        student = self.student_selector.get()
-        course = self.course_selector.get()
-        grade = self.grade_entry.get()
-        # Logic to assign grade in the database
-        print(f"Assign Grade: {grade} for Student: {student} in Course: {course}")
+    def populate_course_selector(self):
+        courses = self.db.get_courses()
+        course_ids = [str(course[0]) for course in courses]
+        self.course_selector.set(course_ids)
 
-# Opened from the Dashboard Window
+    def enroll_student(self):
+        student_id = self.student_selector.get()
+        course_id = self.course_selector.get()
+        
+        if not student_id or not course_id:
+            print("Error: Please select a student and a course.")
+            return
+
+        self.db.add_enrollment(student_id, course_id)
+        print(f"Enrolled Student {student_id} in Course {course_id}")
+
+ 
+
