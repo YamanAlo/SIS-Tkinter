@@ -1,38 +1,36 @@
-# settings.py
-
 import customtkinter
 from tkinter import messagebox
 import languagepack
 import CTkMessagebox as msg
 
-# can you use it to change the language of the windows?
 class SettingsWindow(customtkinter.CTkToplevel):
     def __init__(self, dashboard_window):
         super().__init__()
-        self.title("Settings")
+        self.il8n = languagepack.I18N(language='en')
+        self.title(self.il8n.settings)
         self.geometry("400x300")
         self.dashboard_window = dashboard_window
-
+        
         # Dropdown or other widgets for settings like language
-        self.language_selector = customtkinter.CTkComboBox(self, values=["English", "Arabic", "Turkish"])
+        language_options = [self.il8n.english, self.il8n.arabic, self.il8n.turkish]
+        self.language_selector = customtkinter.CTkComboBox(self, values=language_options)
         self.language_selector.pack(pady=10)
 
         # Button to apply settings
-        self.apply_button = customtkinter.CTkButton(self, text="Apply Changes", command=self.apply_changes)
+        self.apply_button = customtkinter.CTkButton(self, text=self.il8n.apply_changes, command=self.apply_changes)
         self.apply_button.pack(pady=20)
 
     def apply_changes(self):
-            language = self.language_selector.get()
-            if language == "English":
-                language = "en"
-            elif language == "Turkish":
-                language = "tr"
-            elif language == "Arabic":
-                language = "ar"
-            else:
-                language = "en"
+        language = self.language_selector.get()
+        if language == self.il8n.english:
+            language = "en"
+        elif language == self.il8n.turkish:
+            language = "tr"
+        elif language == self.il8n.arabic:
+            language = "ar"
+        else:
+            language = "en"
 
-            self.dashboard_window.update_language(language)
-            
+        self.dashboard_window.update_language(language)
 
-            msg.CTkMessagebox(title = "Settings", message= f"Language set to {language}", icon = "check", option_1 = "Thanks")
+        msg.CTkMessagebox(title=self.il8n.settings, message=f"{self.il8n.language_set_to} {language}", icon="check", option_1=self.il8n.thanks)
