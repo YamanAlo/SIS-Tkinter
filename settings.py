@@ -1,14 +1,18 @@
-import customtkinter
-import database
+# settings.py
 
+import customtkinter
+from tkinter import messagebox
+import languagepack
+import CTkMessagebox as msg
 class SettingsWindow(customtkinter.CTkToplevel):
-    def __init__(self):
+    def __init__(self, dashboard_window):
         super().__init__()
         self.title("Settings")
         self.geometry("400x300")
+        self.dashboard_window = dashboard_window
 
         # Dropdown or other widgets for settings like language
-        self.language_selector = customtkinter.CTkComboBox(self, values=["English", "Spanish", "French"])
+        self.language_selector = customtkinter.CTkComboBox(self, values=["English", "Arabic", "Turkish"])
         self.language_selector.pack(pady=10)
 
         # Button to apply settings
@@ -16,8 +20,17 @@ class SettingsWindow(customtkinter.CTkToplevel):
         self.apply_button.pack(pady=20)
 
     def apply_changes(self):
-        language = self.language_selector.get()
-        # Logic to apply changes, like setting the language
-        print(f"Apply Changes: Language set to {language}")
+            language = self.language_selector.get()
+            if language == "English":
+                language = "en"
+            elif language == "Turkish":
+                language = "tr"
+            elif language == "Arabic":
+                language = "ar"
+            else:
+                language = "en"
 
-# Opened from the Dashboard Window
+            self.dashboard_window.update_language(language)
+            
+
+            msg.CTkMessagebox(title = "Settings", message= f"Language set to {language}", icon = "check", option_1 = "Thanks")

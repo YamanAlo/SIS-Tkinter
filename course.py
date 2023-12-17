@@ -3,6 +3,7 @@ from tkinter import messagebox, simpledialog, Menu
 from tkinter import ttk
 from database import StudentInfoSystem
 import CTkMessagebox as msg
+import languagepack
 
 class CourseListWindow(customtkinter.CTkToplevel):
     def __init__(self, parent, db):
@@ -11,6 +12,7 @@ class CourseListWindow(customtkinter.CTkToplevel):
         self.geometry("400x300")
         self.parent = parent
         self.db = db  # Pass the database connection from the parent
+        self.il8n = languagepack.I18N(language='en')  # Default language is set to English
 
         # Frame for displaying the list of courses
         self.course_list_frame = customtkinter.CTkFrame(self)

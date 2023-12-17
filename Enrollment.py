@@ -3,7 +3,7 @@ from tkinter import ttk
 from database import StudentInfoSystem
 import CTkMessagebox as msg
 
-class GradesManagementWindow(ctk.CTkToplevel):
+class EnrollmentManagementWindow(ctk.CTkToplevel):
     def __init__(self):
         super().__init__()
         self.title("Enrollment Management")

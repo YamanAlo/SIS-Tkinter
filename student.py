@@ -3,10 +3,12 @@ from tkinter import messagebox, simpledialog, Menu
 from tkinter import ttk
 from database import StudentInfoSystem
 import CTkMessagebox as msg
+import languagepack
 
 class StudentListWindow(ctk.CTkToplevel):
     def __init__(self, parent, db):
         super().__init__(parent)
+        self.il8n = languagepack.I18N(language='en')
         self.title("Students List")
         self.geometry("800x400")
         self.parent = parent
@@ -173,57 +175,59 @@ class StudentManagementWindow(ctk.CTkToplevel):
         super().__init__()
         self.title("Student Management")
         self.geometry("900x650")
+        self.il8n = languagepack.I18N(language='ar')
 
-
+    
+        
         # Student ID
-        self.student_id_label = ctk.CTkLabel(self, text="Student ID")
+        self.student_id_label = ctk.CTkLabel(self, text=self.il8n.student_id)
         self.student_id_label.pack(pady=5)
         self.student_id_entry = ctk.CTkEntry(self)
         self.student_id_entry.pack(pady=5)
 
 
         # First Name
-        self.first_name_label = ctk.CTkLabel(self, text="First Name")
+        self.first_name_label = ctk.CTkLabel(self, text=self.il8n.first_name)
         self.first_name_label.pack(pady=5)
         self.first_name_entry = ctk.CTkEntry(self)
         self.first_name_entry.pack(pady=5)
 
         # Last Name
-        self.last_name_label = ctk.CTkLabel(self, text="Last Name")
+        self.last_name_label = ctk.CTkLabel(self, text=self.il8n.last_name)
         self.last_name_label.pack(pady=5)
         self.last_name_entry = ctk.CTkEntry(self)
         self.last_name_entry.pack(pady=5)
 
         # Email
-        self.email_label = ctk.CTkLabel(self, text="Email")
+        self.email_label = ctk.CTkLabel(self, text=self.il8n.email)
         self.email_label.pack(pady=5)
         self.email_entry = ctk.CTkEntry(self)
         self.email_entry.pack(pady=5)
         
         # Phone
-        self.phone_label = ctk.CTkLabel(self, text="Phone")
+        self.phone_label = ctk.CTkLabel(self, text=self.il8n.phone)
         self.phone_label.pack(pady=5)
         self.phone_entry = ctk.CTkEntry(self)
         self.phone_entry.pack(pady=5)
         
         # Address
-        self.address_label = ctk.CTkLabel(self, text="Address")
+        self.address_label = ctk.CTkLabel(self, text=self.il8n.address)
         self.address_label.pack(pady=5)
         self.address_entry = ctk.CTkEntry(self)
         self.address_entry.pack(pady=5)
 
         # City
-        self.city_label = ctk.CTkLabel(self, text="City")
+        self.city_label = ctk.CTkLabel(self, text=self.il8n.city)
         self.city_label.pack(pady=5)
         self.city_entry = ctk.CTkEntry(self)
         self.city_entry.pack(pady=5)
 
         # Add Student Button
-        self.add_student_button = ctk.CTkButton(self, text="Add Student", command=self.add_student)
+        self.add_student_button = ctk.CTkButton(self, text=self.il8n.add_student, command=self.add_student)
         self.add_student_button.pack(pady=10)
 
         # Show List Button
-        self.show_list_button = ctk.CTkButton(self, text="Show List", command=self.show_students_list)
+        self.show_list_button = ctk.CTkButton(self, text=self.il8n.show_list, command=self.show_students_list)
         self.show_list_button.pack(pady=10)
 
 
@@ -284,4 +288,6 @@ class StudentManagementWindow(ctk.CTkToplevel):
     def show_students_list(self):
         student_list_window = StudentListWindow(self, self.db)
         student_list_window.show_students_list()
+
+
 

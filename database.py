@@ -42,8 +42,10 @@ class StudentInfoSystem:
         self.cursor.execute(query)
 
         query = '''CREATE TABLE IF NOT EXISTS enrollment (
+            enrollment_id INTEGER PRIMARY KEY NOT NULL,
             student_id INTEGER NOT NULL,
             course_id INTEGER NOT NULL,
+            enrollment_date DATE DEFAULT CURRENT_DATE,
             FOREIGN KEY (student_id) REFERENCES student (student_id),
             FOREIGN KEY (course_id) REFERENCES courses (course_id))'''
         self.cursor.execute(query)
@@ -82,10 +84,10 @@ class StudentInfoSystem:
         self.conn.commit()
         self.conn.close()
 
-    def add_enrollment(self, student_id, course_id):
+    def add_enrollment(self, enrollment_id, student_id, course_id,enrollment_date ):
         self.conn = self.connect()
         self.cursor = self.conn.cursor()
-        self.cursor.execute("INSERT INTO enrollment VALUES (?, ?)", (student_id, course_id))
+        self.cursor.execute("INSERT INTO enrollment VALUES (?, ?,?,?)", (enrollment_id, student_id, course_id, enrollment_date))
         self.conn.commit()
         self.conn.close()
 
@@ -148,13 +150,15 @@ class StudentInfoSystem:
         self.conn.commit()
         self.conn.close()
 
-    def update_enrollment(self, student_id, course_id):
+    def update_enrollment(self, enrollment_id, student_id, course_id, enrollment_date):
         self.conn = self.connect()
         self.cursor = self.conn.cursor()
-        self.cursor.execute("UPDATE enrollment SET student_id=?, course_id=? WHERE student_id=? AND course_id=?", (student_id, course_id, student_id, course_id))
+        self.cursor.execute("UPDATE enrollment SET student_id=?, course_id=?, enrollment_date=? WHERE enrollment_id=?", (student_id, course_id, enrollment_date, enrollment_id))
         self.conn.commit()
         self.conn.close()
     
     def __del__(self):
         if self.conn is not None:
          self.conn.close()
+
+    
