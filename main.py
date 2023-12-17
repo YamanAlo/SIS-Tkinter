@@ -1,5 +1,4 @@
 # main.py
-
 import customtkinter
 import tkinter as tk
 import sqlite3
@@ -7,7 +6,6 @@ import CTkMessagebox as msg
 from student import StudentManagementWindow
 from course import CourseManagementWindow
 from Enrollment import EnrollmentManagementWindow
-from attendance import AttendanceTrackingWindow
 from settings import SettingsWindow
 import database
 import languagepack

@@ -4,6 +4,8 @@ import customtkinter
 from tkinter import messagebox
 import languagepack
 import CTkMessagebox as msg
+
+# can you use it to change the language of the windows?
 class SettingsWindow(customtkinter.CTkToplevel):
     def __init__(self, dashboard_window):
         super().__init__()
