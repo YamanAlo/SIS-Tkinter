@@ -82,7 +82,7 @@ class DashboardWindow(customtkinter.CTk):
         self.course_mgmt_button.configure(text=self.il8n.course_management)
         self.clear_db_button.configure(text=self.il8n.clear_database)
         self.settings_button.configure(text=self.il8n.settings)
-        self.dept_mgmt_button.configure(text=self.il8n.enrollment_management)
+        self.dept_mgmt_button.configure(text=self.il8n.department_management)
 
         # Call update_language for other windows
        

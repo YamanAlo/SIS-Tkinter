@@ -42,12 +42,6 @@ class I18N:
         self.update_course = "Update Course"
         self.delete_course = "Delete Course"
         self.course_management = "Course Management"
-        self.enrollment_id = "Enrollment ID"
-        self.enrollment_date = "Enrollment Date"
-        self.add_enrollment = "Add Enrollment"
-        self.update_enrollment = "Update Enrollment"
-        self.delete_enrollment = "Delete Enrollment"
-        self.enrollment_management = "Enrollment Management"
         self.language = "Language"
         self.apply_changes = "Apply Changes"
         self.create_database = "Create Database"
@@ -99,7 +93,22 @@ class I18N:
         self.failed_clear_database = "Failed to clear database."
         self.database_cleared = "Database cleared successfully."
         self.database_info = "Database Info"
-
+        self.department_list = "Department List"
+        self.department_id = "Department ID"
+        self.department_name = "Department Name"
+        self.edit_department = "Edit Department"
+        self.department_updated_successfully = "Department updated successfully."
+        self.failed_update_department = "Failed to update department."
+        self.are_you_sure_delete_department = "Are you sure you want to delete this department?"
+        self.department_deleted_successfully = "Department deleted successfully."
+        self.failed_delete_department = "Failed to delete department."
+        self.department_management = "Department Management"
+        self.add_department = "Add Department"
+        self.show_departments = "Show Departments"
+        self.department_added_success = "Department added successfully."
+        self.failed_add_department = "Failed to add department."
+        self.yes = "Yes"
+        self.no = "No"
         
     def load_data_in_turkish(self):
         self.student_id = "Öğrenci Numarası"
@@ -119,12 +128,6 @@ class I18N:
         self.update_course = "Ders Güncelle"
         self.delete_course = "Ders Sil"
         self.course_management = "Ders Yönetimi"
-        self.enrollment_id = "Kayıt Numarası"
-        self.enrollment_date = "Kayıt Tarihi"
-        self.add_enrollment = "Kayıt Ekle"
-        self.update_enrollment = "Kayıt Güncelle"
-        self.delete_enrollment = "Kayıt Sil"
-        self.enrollment_management = "Kayıt Yönetimi"
         self.language = "Dil"
         self.apply_changes = "Değişiklikleri Uygula"
         self.create_database = "Veritabanı Oluştur"
@@ -176,7 +179,22 @@ class I18N:
         self.failed_clear_database = "Veritabanı temizlenemedi."
         self.database_cleared = "Veritabanı başarıyla temizlendi."
         self.database_info = "Veritabanı Bilgisi"
-
+        self.department_list = "Bölüm Listesi"  
+        self.department_id = "Bölüm ID"
+        self.department_name = "Bölüm Adı"
+        self.edit_department = "Bölüm Düzenle"
+        self.department_updated_successfully = "Bölüm başarıyla güncellendi."
+        self.failed_update_department = "Bölüm güncellenemedi."
+        self.are_you_sure_delete_department = "Bu bölümü silmek istediğinizden emin misiniz?"
+        self.department_deleted_successfully = "Bölüm başarıyla silindi."
+        self.failed_delete_department = "Bölüm silinemedi."
+        self.department_management = "Bölüm Yönetimi"
+        self.add_department = "Bölüm Ekle"
+        self.show_departments = "Bölümleri Göster"
+        self.department_added_success = "Bölüm başarıyla eklendi."
+        self.failed_add_department = "Bölüm eklenemedi."
+        self.yes = "Evet"
+        self.no = "Hayır"
 
 
     def load_data_in_arabic(self):
@@ -197,12 +215,6 @@ class I18N:
         self.update_course = "تحديث الدورة"
         self.delete_course = "حذف الدورة"
         self.course_management = "إدارة الدورات"
-        self.enrollment_id = "رقم التسجيل"
-        self.enrollment_date = "تاريخ التسجيل"
-        self.add_enrollment = "إضافة تسجيل"
-        self.update_enrollment = "تحديث التسجيل"
-        self.delete_enrollment = "حذف التسجيل"
-        self.enrollment_management = "إدارة التسجيل"
         self.language = "لغة"
         self.apply_changes = "تطبيق التغييرات"
         self.create_database = "إنشاء قاعدة بيانات"
@@ -254,6 +266,23 @@ class I18N:
         self.failed_clear_database = "فشل مسح قاعدة البيانات."
         self.database_cleared = "تم مسح قاعدة البيانات بنجاح."
         self.database_info = "معلومات قاعدة البيانات"
+        self.department_list = "قائمة الأقسام"
+        self.department_id = "معرف القسم"
+        self.department_name = "اسم القسم"
+        self.edit_department = "تحرير القسم"
+        self.department_updated_successfully = "تم تحديث القسم بنجاح."
+        self.failed_update_department = "فشل تحديث القسم."
+        self.are_you_sure_delete_department = "هل أنت متأكد أنك تريد حذف هذا القسم؟"
+        self.department_deleted_successfully = "تم حذف القسم بنجاح."
+        self.failed_delete_department = "فشل حذف القسم."
+        self.department_management = "إدارة القسم"
+        self.add_department = "إضافة قسم"
+        self.show_departments = "إظهار الأقسام"
+        self.department_added_success = "تمت إضافة القسم بنجاح."
+        self.failed_add_department = "فشل إضافة القسم."
+        self.yes = "نعم"
+        self.no = "لا"
+
 
 
     def load_data_from_file(self, language):
@@ -282,12 +311,6 @@ class I18N:
         self.update_course = language_data['update_course']
         self.delete_course = language_data['delete_course']
         self.course_management = language_data['course_management']
-        self.enrollment_id = language_data['enrollment_id']
-        self.enrollment_date = language_data['enrollment_date']
-        self.add_enrollment = language_data['add_enrollment']
-        self.update_enrollment = language_data['update_enrollment']
-        self.delete_enrollment = language_data['delete_enrollment']
-        self.enrollment_management = language_data['enrollment_management']
         self.language = language_data['language']
         self.apply_changes = language_data['apply_changes']
         self.create_database = language_data['create_database']
@@ -339,6 +362,24 @@ class I18N:
         self.failed_clear_database = language_data['failed_clear_database']
         self.database_cleared = language_data['database_cleared']
         self.database_info = language_data['database_info']
+        self.department_list = language_data['department_list']
+        self.department_id = language_data['department_id']
+        self.department_name = language_data['department_name']
+        self.edit_department = language_data['edit_department']
+        self.department_updated_successfully = language_data['department_updated_successfully']
+        self.failed_update_department = language_data['failed_update_department']
+        self.are_you_sure_delete_department = language_data['are_you_sure_delete_department']
+        self.department_deleted_successfully = language_data['department_deleted_successfully']
+        self.failed_delete_department = language_data['failed_delete_department']
+        self.department_management = language_data['department_management']
+        self.add_department = language_data['add_department']
+        self.show_departments = language_data['show_departments'] 
+        self.department_added_success = language_data['department_added_success']
+        self.failed_add_department = language_data['failed_add_department']
+        self.yes = language_data['yes']
+        self.no = language_data['no']
+
+
 
         
     @staticmethod

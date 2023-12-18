@@ -35,14 +35,14 @@ class StudentInfoSystem:
         self.cursor.execute(query)
 
         query = '''CREATE TABLE IF NOT EXISTS courses (
-            course_id INTEGER PRIMARY KEY NOT NULL ,
+            course_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,
             course_name TEXT NOT NULL,
             course_code TEXT NOT NULL,
             course_description TEXT)'''
         self.cursor.execute(query)
 
         query = '''CREATE TABLE IF NOT EXISTS department (
-            department_id INTEGER PRIMARY KEY NOT NULL,
+            department_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
             department_name TEXT NOT NULL,
             student_id INTEGER,
             FOREIGN KEY (student_id) REFERENCES student (student_id))'''
@@ -61,7 +61,7 @@ class StudentInfoSystem:
         self.cursor.execute(query)
         query = '''DELETE FROM courses'''
         self.cursor.execute(query)
-        query = '''DELETE FROM enrollment'''
+        query = '''DELETE FROM department'''
         self.cursor.execute(query)
         self.conn.commit()
         self.conn.close()
@@ -135,10 +135,10 @@ class StudentInfoSystem:
         self.conn.close()
 
 
-    def add_department(self, department_name , department_id):
+    def add_department(self, department_name,student_id):
         self.conn = self.connect()
         self.cursor = self.conn.cursor()
-        self.cursor.execute("INSERT INTO department VALUES (NULL, ?, ?)", (department_name,department_id))
+        self.cursor.execute("INSERT INTO department VALUES (NULL,?,?)", (department_name,student_id))
         self.conn.commit()
         self.conn.close()
 
@@ -149,17 +149,26 @@ class StudentInfoSystem:
         self.conn.commit()
         self.conn.close()
 
-    def update_department(self, department_id,department_name):
+    def update_department(self, department_id,department_name,student_id):
         self.conn = self.connect()
         self.cursor = self.conn.cursor()
-        self.cursor.execute("UPDATE department SET department_name=? WHERE department_id=?", (department_name, department_id))
+        self.cursor.execute("UPDATE department SET department_name=?, student_id=? WHERE department_id=?", (department_name, student_id, department_id))
         self.conn.commit()
         self.conn.close()
+
+    # def get_department(self):
+    #     self.conn = self.connect()
+    #     self.cursor = self.conn.cursor()
+    #     self.cursor.execute("SELECT * FROM department")
+    #     rows = self.cursor.fetchall()
+    #     self.conn.close()
+    #     return rows
+
 
     def get_department(self):
         self.conn = self.connect()
         self.cursor = self.conn.cursor()
-        self.cursor.execute("SELECT * FROM department")
+        self.cursor.execute("SELECT department.department_id, department.department_name, student.student_id FROM department LEFT JOIN student ON department.student_id = student.student_id")
         rows = self.cursor.fetchall()
         self.conn.close()
         return rows
