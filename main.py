@@ -11,7 +11,6 @@ from settings import SettingsWindow
 import database
 import languagepack
 
-
 class DashboardWindow(customtkinter.CTk):
     def __init__(self):
         super().__init__()
@@ -19,8 +18,8 @@ class DashboardWindow(customtkinter.CTk):
         self.db = database.StudentInfoSystem()
         self.il8n = languagepack.I18N(language='en')  # Default language is set to English
         self.title(self.il8n.dashboard)
-
-        # Create widgets
+        
+        
         self.create_widgets()
 
     def create_widgets(self):
@@ -75,17 +74,19 @@ class DashboardWindow(customtkinter.CTk):
         self.settings_window = SettingsWindow(self)
 
     def update_language(self, language):
-    
         self.il8n = languagepack.I18N(language=language)
-
-    
         self.title(self.il8n.dashboard)
         self.create_db_button.configure(text=self.il8n.create_database)
         self.student_mgmt_button.configure(text=self.il8n.student_management)
         self.course_mgmt_button.configure(text=self.il8n.course_management)
         self.clear_db_button.configure(text=self.il8n.clear_database)
         self.settings_button.configure(text=self.il8n.settings)
-        
+        self.enroll_mgmt_button.configure(text=self.il8n.enrollment_management)
+
+        # Call update_language for other windows
+       
+
+
             
 # Create and run the dashboard
 app = DashboardWindow()

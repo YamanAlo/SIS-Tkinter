@@ -55,6 +55,41 @@ class I18N:
         self.settings = "Settings"
         self.dashboard = "Dashboard"
         self.show_list = "Show List"
+        self.edit = "Edit"
+        self.delete = "Delete"
+        self.edit_student = "Edit Student"
+        self.save_changes = "Save Changes"
+        self.error = "Error"
+        self.required_fields = "Please enter all required fields."
+        self.no_numbers_allowed = 'should not contain numbers.'
+        self.student_id_number = "Student ID should be a number."
+        self.phone_number = "Phone number should be a number."
+        self.first_name_alpha = "First Name should contain only alphabets."
+        self.last_name_alpha = "Last Name should contain only alphabets."
+        self.email_format = "Email should contain only alphabets, numbers, '@', and '.'"
+        self.success = "Success"
+        self.student_updated = "Student updated successfully."
+        self.failed_update_student = "Failed to update student."
+        self.confirm_deletion = "Confirm Deletion"
+        self.confirm_delete_student = "Are you sure you want to delete this student?"
+        self.failed_remove_student = "Failed to delete student."
+        self.student_added_success = "Student added successfully."
+        self.failed_add_student = "Failed to add student."
+        self.edit_course = "Edit Course"
+        self.enter_required_fields = "Please enter both Course Name and Course Code."
+        self.no_numbers = "should not contain numbers."
+        self.course_added_success = "Course added successfully."
+        self.failed_add_course = "Failed to add course."
+        self.are_you_sure_delete_course = "Are you sure you want to delete this course?"
+        self.course_deleted_successfully = "Course deleted successfully."
+        self.failed_delete_course = "Failed to delete course."
+        self.course_list = 'Course List'
+        self.english = 'English'
+        self.turkish = 'Turkish'
+        self.arabic = 'Arabic'
+        self.thanks = 'Thanks'
+        self.language_set_to  = 'Language set to'
+
 
         
         
@@ -89,6 +124,44 @@ class I18N:
         self.settings = "Ayarlar"
         self.dashboard = "Kontrol Paneli"
         self.show_list = "Listeyi Göster"
+        self.edit = "Düzenle"
+        self.delete = "Sil"
+        self.edit_student = "Öğrenci Düzenle"
+        self.save_changes = "Değişiklikleri Kaydet"
+        self.error = "Hata"
+        self.required_fields = "Lütfen tüm gerekli alanları doldurun."
+        self.no_numbers_allowed = 'sayı içermemelidir.'
+        self.student_id_number = "Öğrenci Numarası bir sayı olmalıdır."
+        self.phone_number = "Telefon numarası bir sayı olmalıdır."
+        self.first_name_alpha = "İsim sadece harfler içermelidir."
+        self.last_name_alpha = "Soyisim sadece harfler içermelidir."
+        self.email_format = "E-posta sadece harfler, sayılar, '@' ve '.' içermelidir."
+        self.success = "Başarılı"
+        self.student_updated = "Öğrenci başarıyla güncellendi."
+        self.failed_update_student = "Öğrenci güncellenemedi."
+        self.confirm_deletion = "Silme Onayı"
+        self.confirm_delete_student = "Bu öğrenciyi silmek istediğinizden emin misiniz?"
+        self.failed_remove_student = "Öğrenci silinemedi."
+        self.student_added_success = "Öğrenci başarıyla eklendi."
+        self.failed_add_student = "Öğrenci eklenemedi."
+        self.edit_course = "Ders Düzenle"
+        self.enter_required_fields = "Lütfen Ders Adı ve Ders Kodu alanlarını doldurun."
+        self.no_numbers = "sayı içermemelidir."
+        self.course_added_success = "Ders başarıyla eklendi."
+        self.failed_add_course = "Ders eklenemedi."
+        self.are_you_sure_delete_course = "Bu dersi silmek istediğinizden emin misiniz?"
+        self.course_deleted_successfully = "Ders başarıyla silindi."
+        self.failed_delete_course = "Ders silinemedi."
+        self.course_list = 'Ders Listesi'
+        self.english = 'İngilizce'
+        self.turkish = 'Türkçe'
+        self.arabic = 'Arapça'
+        self.thanks = 'Teşekkürler'
+        self.language_set_to  = 'Dil ayarlandı'
+
+
+
+
 
     def load_data_in_arabic(self):
         self.student_id = "رقم الطالب"
@@ -121,6 +194,43 @@ class I18N:
         self.settings = "الإعدادات"
         self.dashboard = "لوحة القيادة"
         self.show_list = "إظهار القائمة"
+        self.edit = "تعديل"
+        self.delete = "حذف"
+        self.edit_student = "تحرير الطالب"
+        self.save_changes = "حفظ التغييرات"
+        self.error = "خطأ"
+        self.required_fields = "الرجاء إدخال جميع الحقول المطلوبة."
+        self.no_numbers_allowed = 'يجب ألا يحتوي على أرقام.'
+        self.student_id_number = "يجب أن يكون رقم الطالب رقمًا."
+        self.phone_number = "يجب أن يكون رقم الهاتف رقمًا."
+        self.first_name_alpha = "يجب أن يحتوي الاسم الأول على أحرف فقط."
+        self.last_name_alpha = "يجب أن يحتوي الاسم الأخير على أحرف فقط."
+        self.email_format = "يجب أن يحتوي البريد الإلكتروني على أحرف فقط وأرقام و '@' و '.'"
+        self.success = "نجاح"
+        self.student_updated = "تم تحديث الطالب بنجاح."
+        self.failed_update_student = "فشل تحديث الطالب."
+        self.confirm_deletion = "تأكيد الحذف"
+        self.confirm_delete_student = "هل أنت متأكد أنك تريد حذف هذا الطالب؟"
+        self.failed_remove_student = "فشل حذف الطالب."
+        self.student_added_success = "تمت إضافة الطالب بنجاح."
+        self.failed_add_student = "فشل إضافة الطالب."
+        self.edit_course = "تحرير الدورة"
+        self.enter_required_fields = "الرجاء إدخال كل من اسم الدورة ورمز الدورة."
+        self.no_numbers = "يجب ألا يحتوي على أرقام."
+        self.course_added_success = "تمت إضافة الدورة بنجاح."
+        self.failed_add_course = "فشل إضافة الدورة."
+        self.are_you_sure_delete_course = "هل أنت متأكد أنك تريد حذف هذه الدورة؟"
+        self.course_deleted_successfully = "تم حذف الدورة بنجاح."
+        self.failed_delete_course = "فشل حذف الدورة."
+        self.course_list = 'قائمة الدورات'
+        self.english = 'الإنجليزية'
+        self.turkish = 'اللغة التركية'
+        self.arabic = 'العربية'
+        self.thanks = 'شكرا'
+        self.language_set_to  = 'تم تعيين اللغة على'
+
+
+
 
     def load_data_from_file(self, language):
         language_data = {}
@@ -162,6 +272,41 @@ class I18N:
         self.settings = language_data['settings']
         self.dashboard = language_data['dashboard']
         self.show_list = language_data['show_list']
+        self.edit = language_data['edit']
+        self.delete = language_data['delete']
+        self.edit_student = language_data['edit_student']
+        self.save_changes = language_data['save_changes']
+        self.error = language_data['error']
+        self.required_fields = language_data['required_fields']
+        self.no_numbers_allowed = language_data['no_numbers_allowed']
+        self.student_id_number = language_data['student_id_number']
+        self.phone_number = language_data['phone_number']
+        self.first_name_alpha = language_data['first_name_alpha']
+        self.last_name_alpha = language_data['last_name_alpha']
+        self.email_format = language_data['email_format']
+        self.success = language_data['success']
+        self.student_updated = language_data['student_updated']
+        self.failed_update_student = language_data['failed_update_student']
+        self.confirm_deletion = language_data['confirm_deletion']
+        self.confirm_delete_student = language_data['confirm_delete_student']
+        self.failed_remove_student = language_data['failed_remove_student']
+        self.student_added_success = language_data['student_added_success']
+        self.failed_add_student = language_data['failed_add_student']
+        self.edit_course = language_data['edit_course']
+        self.enter_required_fields = language_data['enter_required_fields']
+        self.no_numbers = language_data['no_numbers']
+        self.course_added_success = language_data['course_added_success']
+        self.failed_add_course = language_data['failed_add_course']
+        self.are_you_sure_delete_course = language_data['are_you_sure_delete_course']
+        self.course_deleted_successfully = language_data['course_deleted_successfully']
+        self.failed_delete_course = language_data['failed_delete_course']
+        self.course_list = language_data['course_list']
+        self.english = language_data['english']
+        self.turkish = language_data['turkish']
+        self.arabic = language_data['arabic']
+        self.thanks = language_data['thanks']
+        self.language_set_to  = language_data['language_set_to']
+        
 
         
     @staticmethod
