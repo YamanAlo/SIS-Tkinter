@@ -175,7 +175,7 @@ class StudentManagementWindow(ctk.CTkToplevel):
         super().__init__()
         self.title("Student Management")
         self.geometry("900x650")
-        self.il8n = languagepack.I18N(language='ar')
+        self.il8n = languagepack.I18N(language='en')
 
     
         

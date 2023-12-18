@@ -174,5 +174,4 @@ class CourseManagementWindow(customtkinter.CTkToplevel):
 
  
 
-      
 
