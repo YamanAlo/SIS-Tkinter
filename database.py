@@ -35,19 +35,17 @@ class StudentInfoSystem:
         self.cursor.execute(query)
 
         query = '''CREATE TABLE IF NOT EXISTS courses (
-            course_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,
+            course_id INTEGER PRIMARY KEY NOT NULL ,
             course_name TEXT NOT NULL,
             course_code TEXT NOT NULL,
             course_description TEXT)'''
         self.cursor.execute(query)
 
-        query = '''CREATE TABLE IF NOT EXISTS enrollment (
-            enrollment_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-            student_id INTEGER NOT NULL,
-            course_id INTEGER,
-            FOREIGN KEY (student_id) REFERENCES student (student_id),
-            FOREIGN KEY (course_id) REFERENCES courses (course_id))
-            '''
+        query = '''CREATE TABLE IF NOT EXISTS department (
+            department_id INTEGER PRIMARY KEY NOT NULL,
+            department_name TEXT NOT NULL,
+            student_id INTEGER,
+            FOREIGN KEY (student_id) REFERENCES student (student_id))'''
         
         self.cursor.execute(query)
     
@@ -85,12 +83,7 @@ class StudentInfoSystem:
         self.conn.commit()
         self.conn.close()
 
-    def add_enrollment(self,enrollment_id ,student_id, course_id ):
-        self.conn = self.connect()
-        self.cursor = self.conn.cursor()
-        self.cursor.execute("INSERT INTO enrollment VALUES (?,?, ?)", (enrollment_id, student_id,course_id))
-        self.conn.commit()
-        self.conn.close()
+
 
     def get_students(self):
         self.conn = self.connect()
@@ -108,30 +101,9 @@ class StudentInfoSystem:
         self.conn.close()
         return rows
 
-    def get_course_id(self, course_code):
-        self.conn = self.connect()
-        self.cursor = self.conn.cursor()
-        self.cursor.execute("SELECT course_id FROM courses WHERE course_code=?", (course_code,))
-        course_id = self.cursor.fetchone()
-        self.conn.close()
-        return course_id[0]
+   
+    
 
-    def get_enrollment(self):
-        self.conn = self.connect()
-        self.cursor = self.conn.cursor()
-        self.cursor.execute("SELECT * FROM enrollment")
-        rows = self.cursor.fetchall()
-        self.conn.close()
-        return rows
-    
-    def get_enrollment_by_id(self, enrollment_id):
-        self.conn = self.connect()
-        self.cursor = self.conn.cursor()
-        self.cursor.execute("SELECT * FROM enrollment WHERE enrollment_id=?", (enrollment_id,))
-        enrollment_data = self.cursor.fetchone()
-        self.conn.close()
-        return enrollment_data
-    
     def delete_student(self, student_id):
         self.conn = self.connect()
         self.cursor = self.conn.cursor()
@@ -147,14 +119,6 @@ class StudentInfoSystem:
         self.conn.close()
 
         
-    
-    def delete_enrollment(self, enrollment_id):
-        self.conn = self.connect()
-        self.cursor = self.conn.cursor()
-        self.cursor.execute("DELETE FROM enrollment WHERE enrollment_id=?", (enrollment_id,))
-        self.conn.commit()
-        self.conn.close()
-
 
     def update_student(self, student_id, first_name, last_name, email, phone, address, city):
         self.conn = self.connect()
@@ -163,7 +127,6 @@ class StudentInfoSystem:
         self.conn.commit()
         self.conn.close()
 
-        
     def update_course(self, course_id, course_name, course_code, course_description):
         self.conn = self.connect()
         self.cursor = self.conn.cursor()
@@ -171,15 +134,37 @@ class StudentInfoSystem:
         self.conn.commit()
         self.conn.close()
 
-    def update_enrollment(self, enrollment_id, student_id, course_id):
+
+    def add_department(self, department_name , department_id):
         self.conn = self.connect()
         self.cursor = self.conn.cursor()
-        self.cursor.execute("UPDATE enrollment SET student_id=?, course_id=? WHERE enrollment_id=?", (student_id, course_id, enrollment_id))
+        self.cursor.execute("INSERT INTO department VALUES (NULL, ?, ?)", (department_name,department_id))
         self.conn.commit()
         self.conn.close()
+
+    def delete_department(self, department_id):
+        self.conn = self.connect()
+        self.cursor = self.conn.cursor()
+        self.cursor.execute("DELETE FROM department WHERE department_id=?", (department_id,))
+        self.conn.commit()
+        self.conn.close()
+
+    def update_department(self, department_id,department_name):
+        self.conn = self.connect()
+        self.cursor = self.conn.cursor()
+        self.cursor.execute("UPDATE department SET department_name=? WHERE department_id=?", (department_name, department_id))
+        self.conn.commit()
+        self.conn.close()
+
+    def get_department(self):
+        self.conn = self.connect()
+        self.cursor = self.conn.cursor()
+        self.cursor.execute("SELECT * FROM department")
+        rows = self.cursor.fetchall()
+        self.conn.close()
+        return rows
+
     
     def __del__(self):
         if self.conn is not None:
          self.conn.close()
-
-    

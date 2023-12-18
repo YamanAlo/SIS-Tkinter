@@ -6,7 +6,7 @@ import sqlite3
 import CTkMessagebox as msg
 from student import StudentManagementWindow
 from course import CourseManagementWindow
-from Enrollment import EnrollmentManagementWindow
+from department import DepartmentManagementWindow
 from settings import SettingsWindow
 import database
 import languagepack
@@ -35,9 +35,9 @@ class DashboardWindow(customtkinter.CTk):
         self.course_mgmt_button = customtkinter.CTkButton(self, text=self.il8n.course_management, command=self.open_course_mgmt)
         self.course_mgmt_button.pack(pady=10)
 
-        # Button for Grades Management
-        self.enroll_mgmt_button = customtkinter.CTkButton(self, text=self.il8n.enrollment_management, command=self.open_enroll_mgmt)
-        self.enroll_mgmt_button.pack(pady=10)
+        # Button for Department Management
+        self.dept_mgmt_button = customtkinter.CTkButton(self, text=self.il8n.department_management, command=self.open_dept_mgmt)
+        self.dept_mgmt_button.pack(pady=10)
 
         # Button for Clear Database
         self.clear_db_button = customtkinter.CTkButton(self, text=self.il8n.clear_database, command=self.clear_db)
@@ -53,8 +53,8 @@ class DashboardWindow(customtkinter.CTk):
     def open_course_mgmt(self):
         self.course_mgmt_window = CourseManagementWindow()
 
-    def open_enroll_mgmt(self):
-        self.enroll_mgmt_window = EnrollmentManagementWindow()
+    def open_dept_mgmt(self):
+        self.dept_mgmt_window = DepartmentManagementWindow()
 
     def create_db(self):
         try:
@@ -82,7 +82,7 @@ class DashboardWindow(customtkinter.CTk):
         self.course_mgmt_button.configure(text=self.il8n.course_management)
         self.clear_db_button.configure(text=self.il8n.clear_database)
         self.settings_button.configure(text=self.il8n.settings)
-        self.enroll_mgmt_button.configure(text=self.il8n.enrollment_management)
+        self.dept_mgmt_button.configure(text=self.il8n.enrollment_management)
 
         # Call update_language for other windows
        
