@@ -8,7 +8,7 @@ import languagepack
 class CourseListWindow(customtkinter.CTkToplevel):
     def __init__(self, parent, db):
         super().__init__(parent)
-        self.il8n = languagepack.I18N(language='ar')
+        self.il8n = languagepack.I18N(language='en')
         self.title(self.il8n.course_list)
         self.geometry("400x300")
         self.parent = parent
@@ -24,7 +24,7 @@ class CourseListWindow(customtkinter.CTkToplevel):
 
         courses = self.db.get_courses()
         for course in courses:
-            label_text = f"{self.il8n.course_name}: {course[1]}, {self.il8n.course_code}: {course[2]}"
+            label_text = f"{self.il8n.course_id}: {course[0]} {self.il8n.course_name}: {course[1]}, {self.il8n.course_code}: {course[2]}"
             label = customtkinter.CTkLabel(self.course_list_frame, text=label_text)
             label.bind("<Button-3>", lambda event, id=course[0]: self.show_context_menu(event, id))
             label.pack()
@@ -48,6 +48,13 @@ class CourseListWindow(customtkinter.CTkToplevel):
 
             entry_frame = customtkinter.CTkFrame(edit_window)
             entry_frame.pack(pady=10)
+
+            course_id_label = customtkinter.CTkLabel(entry_frame, text=f"{self.il8n.course_id}")
+            course_id_label.pack(side='left', padx=5)
+            course_id_entry = customtkinter.CTkEntry(entry_frame)
+            course_id_entry.insert(0, selected_course[0])
+            course_id_entry.pack(side='left', padx=5)
+
 
             course_name_label = customtkinter.CTkLabel(entry_frame, text=f"{self.il8n.course_name}:")
             course_name_label.pack(side='left', padx=5)
@@ -75,6 +82,12 @@ class CourseListWindow(customtkinter.CTkToplevel):
         if any(char.isdigit() for char in new_name):
             msg.CTkMessagebox(title=self.il8n.error, message=f"{self.il8n.course_name}{self.il8n.no_numbers}", icon="cancel")
             return
+        
+        if any(char.isspace() for char in new_name + new_code ):
+            error_fields = [field for field, value in {"Course Name": new_name, "Course Code": new_code}.items() if any(char.isspace() for char in value)]
+            error_message = f"{', '.join(error_fields)} {self.il8n.no_spaces_allowed}"
+            msg.CTkMessagebox(title=self.il8n.error, message=error_message, icon="cancel")
+            return
 
         try:
             self.db.update_course(course_id, new_name, new_code, "")
@@ -98,7 +111,7 @@ class CourseListWindow(customtkinter.CTkToplevel):
 class CourseManagementWindow(customtkinter.CTkToplevel):
     def __init__(self):
         super().__init__()
-        self.il8n = languagepack.I18N(language='ar')
+        self.il8n = languagepack.I18N(language='en')
         self.title(self.il8n.course_management)
         self.geometry("600x500")
 
@@ -131,7 +144,13 @@ class CourseManagementWindow(customtkinter.CTkToplevel):
         if any(char.isdigit() for char in course_name):
             msg.CTkMessagebox(title=self.il8n.error, message=f"{self.il8n.course_name}{self.il8n.no_numbers}", icon="cancel")
             return
-
+        
+        # no spaces in both course name and course code
+        if any(char.isspace() for char in course_name + course_code ):
+            error_fields = [field for field, value in {"Course Name": course_name, "Course Code": course_code}.items() if any(char.isspace() for char in value)]
+            error_message = f"{', '.join(error_fields)} {self.il8n.no_spaces_allowed}"
+            msg.CTkMessagebox(title=self.il8n.error, message=error_message, icon="cancel")
+            return
         try:
             self.db.add_course(course_name, course_code, "")
             msg.CTkMessagebox(title=self.il8n.success, message=self.il8n.course_added_success, icon="check", option_1=self.il8n.thanks)

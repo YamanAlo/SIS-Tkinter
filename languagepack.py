@@ -89,9 +89,17 @@ class I18N:
         self.arabic = 'Arabic'
         self.thanks = 'Thanks'
         self.language_set_to  = 'Language set to'
+        self.course_id = "Course ID"
+        self.gender = 'Gender'
+        self.male = 'Male'
+        self.female = 'Female'
+        self.no_spaces_allowed = 'should not contain spaces.'
+        self.database_created = "Database created successfully."
+        self.failed_create_database = "Failed to create database."
+        self.failed_clear_database = "Failed to clear database."
+        self.database_cleared = "Database cleared successfully."
+        self.database_info = "Database Info"
 
-
-        
         
     def load_data_in_turkish(self):
         self.student_id = "Öğrenci Numarası"
@@ -158,8 +166,16 @@ class I18N:
         self.arabic = 'Arapça'
         self.thanks = 'Teşekkürler'
         self.language_set_to  = 'Dil ayarlandı'
-
-
+        self.course_id = "Ders ID"
+        self.gender = "Cinsiyet"
+        self.male = "Erkek"
+        self.female = "Kadın"
+        self.no_spaces_allowed = 'boşluk içermemelidir.'
+        self.database_created = "Veritabanı başarıyla oluşturuldu."
+        self.failed_create_database = "Veritabanı oluşturulamadı."
+        self.failed_clear_database = "Veritabanı temizlenemedi."
+        self.database_cleared = "Veritabanı başarıyla temizlendi."
+        self.database_info = "Veritabanı Bilgisi"
 
 
 
@@ -228,14 +244,21 @@ class I18N:
         self.arabic = 'العربية'
         self.thanks = 'شكرا'
         self.language_set_to  = 'تم تعيين اللغة على'
-
-
+        self.course_id = "معرف الدورة"
+        self.gender = 'جنس'
+        self.male = "ذكر"
+        self.female= "أنثى"
+        self.no_spaces_allowed = 'يجب ألا يحتوي على مسافات.'
+        self.database_created = "تم إنشاء قاعدة البيانات بنجاح."
+        self.failed_create_database = "فشل إنشاء قاعدة البيانات."
+        self.failed_clear_database = "فشل مسح قاعدة البيانات."
+        self.database_cleared = "تم مسح قاعدة البيانات بنجاح."
+        self.database_info = "معلومات قاعدة البيانات"
 
 
     def load_data_from_file(self, language):
         language_data = {}
         language_file = f'data_{language}.lng'
-        print(f"Attempting to load {language_file}")
         with open(language_file, encoding='utf-8') as f:
             for line in f:
                 key, value = line.strip().split('=')
@@ -306,7 +329,16 @@ class I18N:
         self.arabic = language_data['arabic']
         self.thanks = language_data['thanks']
         self.language_set_to  = language_data['language_set_to']
-        
+        self.course_id = language_data['course_id']
+        self.gender = language_data['gender']
+        self.male = language_data['male']
+        self.female = language_data['female']
+        self.no_spaces_allowed = language_data['no_spaces_allowed']
+        self.database_created = language_data['database_created']
+        self.failed_create_database = language_data['failed_create_database']
+        self.failed_clear_database = language_data['failed_clear_database']
+        self.database_cleared = language_data['database_cleared']
+        self.database_info = language_data['database_info']
 
         
     @staticmethod

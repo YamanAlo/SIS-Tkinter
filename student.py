@@ -8,7 +8,7 @@ import languagepack
 class StudentListWindow(ctk.CTkToplevel):
     def __init__(self, parent, db):
         super().__init__(parent)
-        self.il8n = languagepack.I18N(language='tr')
+        self.il8n = languagepack.I18N(language='en')
         self.title(self.il8n.show_list)
         self.geometry("800x400")
         self.parent = parent
@@ -58,16 +58,16 @@ class StudentListWindow(ctk.CTkToplevel):
             # First Name
             first_name_label = ctk.CTkLabel(entry_frame, text=f"{self.il8n.first_name}:")
             first_name_label.pack(side='left', padx=5)
-            new_name_entry = ctk.CTkEntry(entry_frame)
-            new_name_entry.insert(0, selected_student[1])  
-            new_name_entry.pack(side='left', padx=5)
+            new_first_name_entry = ctk.CTkEntry(entry_frame)
+            new_first_name_entry.insert(0, selected_student[1])  
+            new_first_name_entry.pack(side='left', padx=5)
 
             # Last Name
             last_name_label = ctk.CTkLabel(entry_frame, text=f"{self.il8n.last_name}:")
             last_name_label.pack(side='left', padx=5)
-            new_name_entry = ctk.CTkEntry(entry_frame)
-            new_name_entry.insert(0, selected_student[2])  
-            new_name_entry.pack(side='left', padx=5)
+            new_last_name_entry = ctk.CTkEntry(entry_frame)
+            new_last_name_entry.insert(0, selected_student[2])  
+            new_last_name_entry.pack(side='left', padx=5)
 
             # Email
             student_email_label = ctk.CTkLabel(entry_frame, text=f"{self.il8n.email}:")
@@ -99,10 +99,10 @@ class StudentListWindow(ctk.CTkToplevel):
 
             # Save Changes Button
             save_button = ctk.CTkButton(edit_window, text=self.il8n.save_changes,
-                                                  command=lambda: self.save_changes(edit_window, 
+                                                  command=lambda: self.save_changes(edit_window,
                                                                                       new_id_entry.get(),
-                                                                                      new_name_entry.get(),
-                                                                                      new_name_entry.get(),
+                                                                                      new_first_name_entry.get(),
+                                                                                      new_last_name_entry.get(),
                                                                                       new_email_entry.get(),
                                                                                       new_phone_entry.get(),
                                                                                       new_address_entry.get(),
@@ -121,7 +121,16 @@ class StudentListWindow(ctk.CTkToplevel):
             error_message = f"{', '.join(error_fields)} {self.il8n.no_numbers_allowed}"
             msg.CTkMessagebox(title=self.il8n.error, message=error_message , icon="cancel")
             return
-        
+
+        # Validate (no spaces allowed)
+
+        if any(char.isspace() for char in student_id + first_name + last_name + email + phone + address + city):
+            error_fields = [field for field, value in {"Student ID": student_id, "First Name": first_name, "Last Name": last_name, "Email": email, "Phone": phone, "Address": address, "City": city}.items() if any(char.isspace() for char in value)]
+            error_message = f"{', '.join(error_fields)} {self.il8n.no_spaces_allowed}"
+            msg.CTkMessagebox(title=self.il8n.error, message=error_message, icon="cancel")
+            return
+    
+
         if not student_id.isdigit():
             msg.CTkMessagebox(title=self.il8n.error, message=self.il8n.student_id_number, icon="cancel")
             return
@@ -163,7 +172,7 @@ class StudentManagementWindow(ctk.CTkToplevel):
         super().__init__()
         self.geometry("900x650")
         self.il8n = languagepack.I18N(language='en')
-
+        self.title(self.il8n.student_management)
     
         # Student ID
         self.student_id_label = ctk.CTkLabel(self, text=self.il8n.student_id)
@@ -233,6 +242,12 @@ class StudentManagementWindow(ctk.CTkToplevel):
             msg.CTkMessagebox(title=self.il8n.error, message=self.il8n.required_fields, icon="cancel")
             return
 
+        # cant have spaces in all fields
+        if any(char.isspace() for char in student_id + student_first_name + student_last_name + student_email + student_phone + student_address + student_city):
+            error_fields = [field for field, value in {"Student ID": student_id, "First Name": student_first_name, "Last Name": student_last_name, "Email": student_email, "Phone": student_phone, "Address": student_address, "City": student_city}.items() if any(char.isspace() for char in value)]
+            error_message = f"{', '.join(error_fields)} {self.il8n.no_spaces_allowed}"
+            msg.CTkMessagebox(title=self.il8n.error, message=error_message, icon="cancel")
+            return
         # Validate (no numbers allowed)
         if any(char.isdigit() for char in student_first_name + student_last_name + student_address + student_city):
             error_fields = [field for field, value in {"First Name": student_first_name, "Last Name": student_last_name, "Address": student_address, "City": student_city}.items() if any(char.isdigit() for char in value)]

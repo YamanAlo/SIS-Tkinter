@@ -59,16 +59,17 @@ class DashboardWindow(customtkinter.CTk):
     def create_db(self):
         try:
             self.db.create_database()
-            msg.CTkMessagebox(title="Database Info", message="Database created.", icon="check", option_1="Thanks")
+            msg.CTkMessagebox(title=self.il8n.database_info, message=self.il8n.database_created, icon="check", option_1=self.il8n.thanks)
         except sqlite3.Error as err:
-            msg.CTkMessagebox(title="Database Info", message="Failed to create the database", icon="cancel")
+            msg.CTkMessagebox(title=self.il8n.database_info, message=self.il8n.failed_create_database, icon="cancel" + str(err))
+        
 
     def clear_db(self):
         try:
             self.db.clear_database()
-            msg.CTkMessagebox(title="Database info", message="Database cleared.", icon="check", option_1="Thanks")
+            msg.CTkMessagebox(title=self.il8n.database_info, message=self.il8n.clear_database, icon="check", option_1=self.il8n.thanks)
         except sqlite3.Error as err:
-            msg.CTkMessagebox(title="Database info", message="Failed to clear the database.", icon="cancel")
+            msg.CTkMessagebox(title=self.il8n.database_info, message=self.il8n.failed_clear_database, icon="cancel" + str(err))
 
     def open_settings(self):
         self.settings_window = SettingsWindow(self)

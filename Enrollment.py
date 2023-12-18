@@ -1,78 +1,8 @@
-# Enrollment.py
 import customtkinter as ctk
 from tkinter import ttk, Menu
 import CTkMessagebox as msg
 from database import StudentInfoSystem
 
-
-class EnrollmentManagementWindow(ctk.CTkToplevel):
-    def __init__(self):
-        super().__init__()
-        self.title("Enrollment Management")
-        self.geometry("600x500")
-        self.db = StudentInfoSystem()
-
-        # Labels for student and course selection
-        student_label = ctk.CTkLabel(self, text="Select Student ID:")
-        student_label.pack(pady=5)
-
-        # Combobox for selecting student
-        self.student_combobox = ttk.Combobox(self, state="readonly")
-        self.student_combobox.set("Select Student ID")
-        self.student_combobox.pack(pady=5)
-        self.populate_student_combobox()
-
-        course_label = ctk.CTkLabel(self, text="Select Course Code:")
-        course_label.pack(pady=5)
-
-        # Combobox for selecting course
-        self.course_combobox = ttk.Combobox(self, state="readonly")
-        self.course_combobox.set(" Choose Course Code")
-        self.course_combobox.pack(pady=5)
-        self.populate_course_combobox()
-
-        # Button to enroll the student
-        self.enroll_student_button = ctk.CTkButton(self, text="Enroll Student", command=self.enroll_student)
-        self.enroll_student_button.pack(pady=10)
-
-        # Button to show the list of enrollments
-        self.show_list_button = ctk.CTkButton(self, text="Show List", command=self.show_enrollment_list)
-        self.show_list_button.pack(pady=10)
-
-    def populate_student_combobox(self):
-        students = self.db.get_students()
-        student_ids = [str(student[0]) for student in students]
-        self.student_combobox['values'] = ["Select Student ID"] + student_ids
-
-    def populate_course_combobox(self):
-        courses = self.db.get_courses()
-        course_codes = [str(course[2]) for course in courses]
-        self.course_combobox['values'] = ["Select Course Code"] + course_codes
-
-    def enroll_student(self):
-        student_id = self.student_combobox.get()
-        course_code = self.course_combobox.get()
-
-        if student_id == "Select Student ID" or course_code == "Select Course Code":
-            msg.CTkMessagebox(title="Error", message="Please select a valid student and course.", icon="cancel")
-            return
-
-        if not student_id or not course_code:
-            msg.CTkMessagebox(title="Error", message="Please select both student ID and course code.", icon="cancel")
-            return
-
-        try:
-            self.db.add_enrollment(student_id, course_code)
-            msg.CTkMessagebox(title="Success", message=f"Enrolled Student {student_id} in Course {course_code}", icon="info")
-        except Exception as e:
-            msg.CTkMessagebox(title="Error", message=f"Failed to enroll student: {str(e)}", icon="cancel")
-
-    def show_enrollment_list(self):
-        # Get enrollment list from the database
-        enrollment_list = self.db.get_enrollment()
-
-        # Open a new window to display the list
-        EnrollmentListWindow(self, enrollment_list)
 
 
 
@@ -98,8 +28,9 @@ class EnrollmentListWindow(ctk.CTkToplevel):
             widget.destroy()
 
         # Populate the frame with enrollment list from the provided data
-        for enrollment in self.enrollment_list:
-            label_text = f"Student ID: {enrollment[0]}, Course Code: {enrollment[1]}"
+        enrollments = self.parent.db.get_enrollment()
+        for enrollment in enrollments:
+            label_text = f"Enrollment ID: {enrollment[0]} ,Student ID: {enrollment[1]}, Course Code: {enrollment[2]}"
             label = ctk.CTkLabel(self.enrollment_list_frame, text=label_text)
             label.bind("<Button-3>", lambda event, id=enrollment[0]: self.show_context_menu(event, id))
             label.pack()
@@ -184,3 +115,81 @@ class EnrollmentListWindow(ctk.CTkToplevel):
 
         except Exception as e:
             msg.CTkMessagebox(title="Error", message=f"Failed to delete enrollment: {str(e)}", icon="cancel")
+
+
+
+
+
+
+class EnrollmentManagementWindow(ctk.CTkToplevel):
+    def __init__(self):
+        super().__init__()
+        self.title("Enrollment Management")
+        self.geometry("600x500")
+        self.db = StudentInfoSystem()
+
+        # Labels for student and course selection
+        student_label = ctk.CTkLabel(self, text="Select Student ID:")
+        student_label.pack(pady=5)
+
+        # Combobox for selecting student
+        self.student_combobox = ttk.Combobox(self, state="readonly")
+        self.student_combobox.set("Select Student ID")
+        self.student_combobox.pack(pady=5)
+        self.populate_student_combobox()
+
+        course_label = ctk.CTkLabel(self, text="Select Course Code:")
+        course_label.pack(pady=5)
+
+        # Combobox for selecting course
+        self.course_combobox = ttk.Combobox(self, state="readonly")
+        self.course_combobox.set(" Choose Course Code")
+        self.course_combobox.pack(pady=5)
+        self.populate_course_combobox()
+
+        # Button to enroll the student
+        self.enroll_student_button = ctk.CTkButton(self, text="Enroll Student", command=self.enroll_student)
+        self.enroll_student_button.pack(pady=10)
+
+        # Button to show the list of enrollments
+        self.show_list_button = ctk.CTkButton(self, text="Show List", command=self.show_enrollment_list)
+        self.show_list_button.pack(pady=10)
+
+    def populate_student_combobox(self):
+        students = self.db.get_students()
+        student_ids = [str(student[0]) for student in students]
+        self.student_combobox['values'] = ["Select Student ID"] + student_ids
+
+    def populate_course_combobox(self):
+        courses = self.db.get_courses()
+        course_codes = [str(course[2]) for course in courses]
+        self.course_combobox['values'] = ["Select Course Code"] + course_codes
+
+    def enroll_student(self):
+        student_id = self.student_combobox.get()
+        course_code = self.course_combobox.get()
+
+        if student_id == "Select Student ID" or course_code == "Select Course Code":
+            msg.CTkMessagebox(title="Error", message="Please select a valid student and course.", icon="cancel")
+            return
+
+        if not student_id or not course_code:
+            msg.CTkMessagebox(title="Error", message="Please select both student ID and course code.", icon="cancel")
+            return
+
+        try:
+            self.db.add_enrollment(student_id, course_code)
+            msg.CTkMessagebox(title="Success", message=f"Enrolled Student {student_id} in Course {course_code}", icon="info")
+        except Exception as e:
+            msg.CTkMessagebox(title="Error", message=f"Failed to enroll student: {str(e)}", icon="cancel")
+
+    def show_enrollment_list(self):
+        # Get enrollment list from the database
+        enrollment_list = self.db.get_enrollment()
+
+        # Open a new window to display the list
+        EnrollmentListWindow(self, enrollment_list)
+
+
+
+
