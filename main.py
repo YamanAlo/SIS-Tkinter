@@ -25,32 +25,32 @@ class DashboardWindow(customtkinter.CTk):
     def create_widgets(self):
 
         # Button for creating the database and use the translation
-        self.create_db_button = customtkinter.CTkButton(self, text=self.il8n.create_database, command=self.create_db , )
+        self.create_db_button = customtkinter.CTkButton(self, text=self.il8n.create_database, command=self.create_db ,hover_color="#616F39" , fg_color="#A7D129", text_color= "black")
         self.create_db_button.pack(pady=10)
         
 
         # Button for Student Management
-        self.student_mgmt_button = customtkinter.CTkButton(self, text=self.il8n.student_management, command=self.open_student_mgmt)
+        self.student_mgmt_button = customtkinter.CTkButton(self, text=self.il8n.student_management, command=self.open_student_mgmt ,hover_color="#AF0404" , fg_color="#FF0000", text_color= "white" )
         self.student_mgmt_button.pack(pady=10)
        
 
         # Button for Course Management
-        self.course_mgmt_button = customtkinter.CTkButton(self, text=self.il8n.course_management, command=self.open_course_mgmt)
+        self.course_mgmt_button = customtkinter.CTkButton(self, text=self.il8n.course_management, command=self.open_course_mgmt ,hover_color="#AF0404" , fg_color="#FF0000", text_color= "white")
         self.course_mgmt_button.pack(pady=10)
         
 
         # Button for Department Management
-        self.dept_mgmt_button = customtkinter.CTkButton(self, text=self.il8n.department_management, command=self.open_dept_mgmt)
+        self.dept_mgmt_button = customtkinter.CTkButton(self, text=self.il8n.department_management, command=self.open_dept_mgmt,hover_color="#AF0404" , fg_color="#FF0000", text_color= "white" )
         self.dept_mgmt_button.pack(pady=10)
        
 
         # Button for Clear Database
-        self.clear_db_button = customtkinter.CTkButton(self, text=self.il8n.clear_database, command=self.clear_db)
+        self.clear_db_button = customtkinter.CTkButton(self, text=self.il8n.clear_database, command=self.clear_db ,hover_color="#AF0404" , fg_color="#FF0000", text_color= "white" )
         self.clear_db_button.pack(pady=10)
         
 
         # Button for Settings
-        self.settings_button = customtkinter.CTkButton(self, text=self.il8n.settings, command=self.open_settings)
+        self.settings_button = customtkinter.CTkButton(self, text=self.il8n.settings, command=self.open_settings ,hover_color="#AF0404" , fg_color="#FF0000", text_color= "white" )
         self.settings_button.pack(pady=10)
        
 
