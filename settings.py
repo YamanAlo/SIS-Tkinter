@@ -8,7 +8,7 @@ class SettingsWindow(customtkinter.CTkToplevel):
         super().__init__()
         self.il8n = languagepack.I18N(language='en')
         self.title(self.il8n.settings)
-        self.geometry("400x150")
+        self.geometry("400x300")
         self.dashboard_window = dashboard_window
         
         

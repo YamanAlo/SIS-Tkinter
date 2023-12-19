@@ -10,7 +10,7 @@ class StudentListWindow(ctk.CTkToplevel):
         super().__init__(parent)
         self.il8n = languagepack.I18N(language='en')
         self.title(self.il8n.show_list)
-        self.geometry("900x400")
+        self.geometry("800x400")
         self.parent = parent
         self.db = db 
 
