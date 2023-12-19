@@ -63,6 +63,7 @@ class StudentInfoSystem:
         self.cursor.execute(query)
         query = '''DELETE FROM department'''
         self.cursor.execute(query)
+        
         self.conn.commit()
         self.conn.close()
         
@@ -156,13 +157,6 @@ class StudentInfoSystem:
         self.conn.commit()
         self.conn.close()
 
-    # def get_department(self):
-    #     self.conn = self.connect()
-    #     self.cursor = self.conn.cursor()
-    #     self.cursor.execute("SELECT * FROM department")
-    #     rows = self.cursor.fetchall()
-    #     self.conn.close()
-    #     return rows
 
 
     def get_department(self):

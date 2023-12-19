@@ -4,11 +4,11 @@ from tkinter import ttk
 from database import StudentInfoSystem
 import CTkMessagebox as msg
 import languagepack
-
+from CTkXYFrame import CTkXYFrame
 class StudentListWindow(ctk.CTkToplevel):
     def __init__(self, parent, db):
         super().__init__(parent)
-        self.il8n = languagepack.I18N(language='en')
+        self.il8n = languagepack.I18N(language='tr')
         self.title(self.il8n.show_list)
         self.geometry("800x400")
         self.parent = parent
@@ -16,6 +16,7 @@ class StudentListWindow(ctk.CTkToplevel):
 
         self.students_list_frame = ctk.CTkFrame(self)
         self.students_list_frame.pack(pady=20)
+
 
     def show_students_list(self):
         for widget in self.students_list_frame.winfo_children():
@@ -45,9 +46,18 @@ class StudentListWindow(ctk.CTkToplevel):
             edit_window.title(self.il8n.edit_student)
             edit_window.geometry("750x200")
 
-            entry_frame = ctk.CTkFrame(edit_window)
+            entry_frame = CTkXYFrame(edit_window, width=750, height=200,
+                                         scrollbar_fg_color="blue",
+                                         scrollbar_button_color="blue",
+                                         scrollbar_button_hover_color="cyan")
             entry_frame.pack(pady=10)
 
+            horizontal_scrollbar = ctk.CTkScrollbar(entry_frame, orientation="horizontal",
+                                                     command=entry_frame.xy_canvas.xview)
+            horizontal_scrollbar.pack(side="bottom", fill="x")
+            entry_frame.xy_canvas.configure(xscrollcommand=horizontal_scrollbar.set)
+
+            
             # Student ID
             student_id_label = ctk.CTkLabel(entry_frame, text=f"{self.il8n.student_id}:")
             student_id_label.pack(side='left', padx=5)
@@ -108,7 +118,7 @@ class StudentListWindow(ctk.CTkToplevel):
                                                                                       new_address_entry.get(),
                                                                                       new_city_entry.get()))
             save_button.pack(pady=10)
-
+            
     def save_changes(self, edit_window, student_id, first_name, last_name, email, phone, address, city):
         # Validate data entry   
         if not student_id or not first_name or not last_name or not email or not phone or not address or not city:
@@ -162,7 +172,7 @@ class StudentListWindow(ctk.CTkToplevel):
     def delete_student(self, student_id):
         try:
             self.db.delete_student(student_id)
-            msg.CTkMessagebox(title=self.il8n.confirm_deletion, message=self.il8n.confirm_delete_student, icon="question", option_1=self.il8n.cancel, option_2=self.il8n.no, option_3=self.il8n.yes)
+            messagebox.showinfo(title=self.il8n.confirm_deletion, message=self.il8n.confirm_delete_student)
             self.show_students_list()  # Refresh the course list after deletion
         except Exception as e:
             msg.CTkMessagebox(title=self.il8n.error, message=f"{self.il8n.failed_remove_student}: {e}", icon="cancel")
@@ -171,7 +181,7 @@ class StudentManagementWindow(ctk.CTkToplevel):
     def __init__(self):
         super().__init__()
         self.geometry("900x650")
-        self.il8n = languagepack.I18N(language='en')
+        self.il8n = languagepack.I18N(language='tr')
         self.title(self.il8n.student_management)
     
         # Student ID

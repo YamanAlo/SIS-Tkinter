@@ -4,31 +4,39 @@ from tkinter import ttk
 from database import StudentInfoSystem
 import CTkMessagebox as msg
 import languagepack
+from CTkXYFrame import CTkXYFrame
+
 
 class CourseListWindow(customtkinter.CTkToplevel):
     def __init__(self, parent, db):
         super().__init__(parent)
-        self.il8n = languagepack.I18N(language='en')
+        self.il8n = languagepack.I18N(language='tr')
         self.title(self.il8n.course_list)
         self.geometry("400x300")
         self.parent = parent
         self.db = db
 
 
+
+
         self.course_list_frame = customtkinter.CTkFrame(self)
         self.course_list_frame.pack(pady=20)
-
+        
+   
     def show_course_list(self):
         for widget in self.course_list_frame.winfo_children():
             widget.destroy()
 
         courses = self.db.get_courses()
         for course in courses:
-            label_text = f"{self.il8n.course_id}: {course[0]} {self.il8n.course_name}: {course[1]}, {self.il8n.course_code}: {course[2]}"
+            label_text = f"{self.il8n.course_id}: {course[0]}, {self.il8n.course_name}: {course[1]}, {self.il8n.course_code}: {course[2]}"
             label = customtkinter.CTkLabel(self.course_list_frame, text=label_text)
-            label.bind("<Button-3>", lambda event, id=course[0]: self.show_context_menu(event, id))
+            label.bind("<Button-3>", lambda event, id=course[0]: self.show_context_menu(event, id=id))
             label.pack()
 
+     
+
+        
     def show_context_menu(self, event, course_id):
         context_menu = Menu(self, tearoff=0)
         context_menu.add_command(label=self.il8n.edit, command=lambda: self.edit_course(course_id))
@@ -41,7 +49,7 @@ class CourseListWindow(customtkinter.CTkToplevel):
 
         if selected_course:
             self.selected_course_id = course_id
-
+        
             edit_window = customtkinter.CTkToplevel(self)
             edit_window.title(self.il8n.edit_course)
             edit_window.geometry("750x200")
@@ -67,11 +75,10 @@ class CourseListWindow(customtkinter.CTkToplevel):
             new_code_entry = customtkinter.CTkEntry(entry_frame)
             new_code_entry.insert(0, selected_course[2])
             new_code_entry.pack(side='left', padx=5)
-
             save_button = customtkinter.CTkButton(edit_window, text=self.il8n.save_changes,
-                                                  command=lambda: self.save_changes(edit_window, course_id,
-                                                                                   new_name_entry.get(),
-                                                                                   new_code_entry.get()))
+                                      command=lambda: (lambda: self.save_changes(edit_window, course_id,
+                                                                                 new_name_entry.get(),
+                                                                                 new_code_entry.get()))())
             save_button.pack(pady=10)
 
     def save_changes(self, edit_window, course_id, new_name, new_code):
@@ -111,7 +118,7 @@ class CourseListWindow(customtkinter.CTkToplevel):
 class CourseManagementWindow(customtkinter.CTkToplevel):
     def __init__(self):
         super().__init__()
-        self.il8n = languagepack.I18N(language='en')
+        self.il8n = languagepack.I18N(language='tr')
         self.title(self.il8n.course_management)
         self.geometry("600x500")
 

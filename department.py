@@ -4,16 +4,14 @@ from tkinter import ttk
 from database import StudentInfoSystem
 import CTkMessagebox as msg
 import languagepack
-
-
-
+from CTkXYFrame import CTkXYFrame
 import customtkinter
 from tkinter import messagebox, Menu
 
 class DepartmentListWindow(customtkinter.CTkToplevel):
     def __init__(self, parent, db):
         super().__init__(parent)
-        self.il8n = languagepack.I18N(language='en')
+        self.il8n = languagepack.I18N(language='tr')
         self.title(self.il8n.department_list)
         self.geometry("400x300")
         self.parent = parent
@@ -33,6 +31,8 @@ class DepartmentListWindow(customtkinter.CTkToplevel):
             label = customtkinter.CTkLabel(self.department_list_frame, text=label_text)
             label.bind("<Button-3>", lambda event, id=department[0]: self.show_context_menu(event, id))
             label.pack()
+        
+      
 
     def show_context_menu(self, event, department_id):
         context_menu = Menu(self, tearoff=0)
@@ -68,7 +68,7 @@ class DepartmentListWindow(customtkinter.CTkToplevel):
             new_dept_entry.pack(side='left', padx=5)
 
             # show the student ids that are in the database in a combobox
-            student_id_label = customtkinter.CTkLabel(entry_frame, text="Edit Student ID:")
+            student_id_label = customtkinter.CTkLabel(entry_frame, text=self.il8n.edit_student_id)
             student_id_label.pack(side='left', padx=5)
             new_student_id_combobox = ttk.Combobox(entry_frame)
             new_student_id_combobox['values'] =  [str(student[0]) for student in self.db.get_students()]
@@ -77,9 +77,9 @@ class DepartmentListWindow(customtkinter.CTkToplevel):
 
 
             save_button = customtkinter.CTkButton(edit_window, text=self.il8n.save_changes,
-                                                command=lambda: self.save_changes(edit_window, department_id,
-                                                                                   new_dept_entry.get(),
-                                                                                   new_student_id_combobox.get()))
+                                        command=lambda: (lambda: self.save_changes(edit_window, department_id,
+                                        new_dept_entry.get(), new_student_id_combobox.get())))
+            
             save_button.pack(pady=10)
 
     def save_changes(self, edit_window, department_id, new_name, new_student_id):
@@ -113,7 +113,7 @@ class DepartmentListWindow(customtkinter.CTkToplevel):
 class DepartmentManagementWindow(customtkinter.CTkToplevel):
     def __init__(self):
         super().__init__()
-        self.il8n = languagepack.I18N(language='en')
+        self.il8n = languagepack.I18N(language='tr')
         self.title(self.il8n.department_management)
         self.geometry("600x500")
         
@@ -125,12 +125,12 @@ class DepartmentManagementWindow(customtkinter.CTkToplevel):
         # Add Department Entry
 
         # student id 
-        student_label = customtkinter.CTkLabel(self, text="Select Student ID:")
+        student_label = customtkinter.CTkLabel(self, text=self.il8n.student_id )
         student_label.pack(pady=5)
 
         # Combobox for selecting student
-        self.student_combobox = ttk.Combobox(self, state="readonly")
-        self.student_combobox.set("Select Student ID")
+        self.student_combobox = ttk.Combobox(self)
+        self.student_combobox.set(self.il8n.select_student_id)
         self.student_combobox.pack(pady=5)
         self.populate_student_combobox()
     

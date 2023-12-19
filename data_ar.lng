@@ -83,3 +83,5 @@ department_added_success=تمت إضافة القسم بنجاح.
 failed_add_department=فشل إضافة القسم.
 yes=نعم
 no=لا
+edit_student_id=تحرير معرف الطالب
+select_student_id=حدد معرف الطالب

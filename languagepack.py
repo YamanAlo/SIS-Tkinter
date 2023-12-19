@@ -109,6 +109,8 @@ class I18N:
         self.failed_add_department = "Failed to add department."
         self.yes = "Yes"
         self.no = "No"
+        self.edit_student_id = "Edit Student ID"
+        self.select_student_id = "Select Student ID"
         
     def load_data_in_turkish(self):
         self.student_id = "Öğrenci Numarası"
@@ -195,6 +197,8 @@ class I18N:
         self.failed_add_department = "Bölüm eklenemedi."
         self.yes = "Evet"
         self.no = "Hayır"
+        self.edit_student_id = "Öğrenci Numarasını Düzenle"
+        self.select_student_id = "Öğrenci Numarasını Seçin"
 
 
     def load_data_in_arabic(self):
@@ -282,7 +286,8 @@ class I18N:
         self.failed_add_department = "فشل إضافة القسم."
         self.yes = "نعم"
         self.no = "لا"
-
+        self.edit_student_id = "تحرير معرف الطالب"
+        self.select_student_id = "حدد معرف الطالب"
 
 
     def load_data_from_file(self, language):
@@ -378,7 +383,9 @@ class I18N:
         self.failed_add_department = language_data['failed_add_department']
         self.yes = language_data['yes']
         self.no = language_data['no']
-
+        self.edit_student_id = language_data['edit_student_id']
+        self.select_student_id = language_data['select_student_id']
+    
 
 
         

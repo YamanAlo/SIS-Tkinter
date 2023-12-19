@@ -83,3 +83,5 @@ department_added_success=Department added successfully.
 failed_add_department=Failed to add department.
 yes=Yes
 no=No
+edit_student_id=Edit Student ID
+select_student_id=Select Student ID
