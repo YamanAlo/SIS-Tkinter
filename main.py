@@ -25,7 +25,7 @@ class DashboardWindow(customtkinter.CTk):
     def create_widgets(self):
 
         # Button for creating the database and use the translation
-        self.create_db_button = customtkinter.CTkButton(self, text=self.il8n.create_database, command=self.create_db)
+        self.create_db_button = customtkinter.CTkButton(self, text=self.il8n.create_database, command=self.create_db , )
         self.create_db_button.pack(pady=10)
         
 
