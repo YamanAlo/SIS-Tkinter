@@ -10,7 +10,7 @@ class StudentListWindow(ctk.CTkToplevel):
         super().__init__(parent)
         self.il8n = languagepack.I18N(language='en')
         self.title(self.il8n.show_list)
-        self.geometry("800x400")
+        self.geometry("900x400")
         self.parent = parent
         self.db = db 
 
@@ -28,6 +28,9 @@ class StudentListWindow(ctk.CTkToplevel):
             label = ctk.CTkLabel(self.students_list_frame, text=label_text)
             label.bind("<Button-3>", lambda event, id=student[0]: self.show_context_menu(event, id))
             label.pack()
+            
+            self.grab_set()
+            self.wait_window()
 
     def show_context_menu(self, event, student_id):
         context_menu = Menu(self, tearoff=0)
@@ -45,6 +48,7 @@ class StudentListWindow(ctk.CTkToplevel):
             edit_window = ctk.CTkToplevel(self)
             edit_window.title(self.il8n.edit_student)
             edit_window.geometry("800x301")
+            edit_window.grab_set()
 
             entry_frame = CTkXYFrame(edit_window, width=750, height=200,
                                          scrollbar_fg_color="blue",
@@ -124,6 +128,8 @@ class StudentListWindow(ctk.CTkToplevel):
         if not student_id or not first_name or not last_name or not email or not phone or not address or not city:
             msg.CTkMessagebox(title=self.il8n.error, message=self.il8n.required_fields, icon="cancel")
             return
+        
+        
 
         # Validate (no numbers allowed)
         if any(char.isdigit() for char in first_name + last_name + email + address + city):
@@ -168,6 +174,8 @@ class StudentListWindow(ctk.CTkToplevel):
             edit_window.destroy()  
         except Exception as e:
             msg.CTkMessagebox(title=self.il8n.error, message=f"{self.il8n.failed_update_student}: {e}", icon="cancel")
+        
+        
 
     def delete_student(self, student_id):
         try:
@@ -177,12 +185,14 @@ class StudentListWindow(ctk.CTkToplevel):
         except Exception as e:
             msg.CTkMessagebox(title=self.il8n.error, message=f"{self.il8n.failed_remove_student}: {e}", icon="cancel")
 
+        
 class StudentManagementWindow(ctk.CTkToplevel):
     def __init__(self):
         super().__init__()
         self.geometry("900x650")
         self.il8n = languagepack.I18N(language='en')
         self.title(self.il8n.student_management)
+        self.grab_set()
     
         # Student ID
         self.student_id_label = ctk.CTkLabel(self, text=self.il8n.student_id)
@@ -294,6 +304,7 @@ class StudentManagementWindow(ctk.CTkToplevel):
     def show_students_list(self):
         student_list_window = StudentListWindow(self, self.db)
         student_list_window.show_students_list()
-
+        student_list_window.grab_set()
+       
 
 

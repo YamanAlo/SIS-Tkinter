@@ -30,7 +30,8 @@ class DepartmentListWindow(customtkinter.CTkToplevel):
             label = customtkinter.CTkLabel(self.department_list_frame, text=label_text)
             label.bind("<Button-3>", lambda event, id=department[0]: self.show_context_menu(event, id))
             label.pack()
-        
+
+            self.grab_set()
       
 
     def show_context_menu(self, event, department_id):
@@ -49,6 +50,7 @@ class DepartmentListWindow(customtkinter.CTkToplevel):
             edit_window = customtkinter.CTkToplevel(self)
             edit_window.title(self.il8n.edit_department)
             edit_window.geometry("750x200")
+            edit_window.grab_set()
 
             entry_frame = customtkinter.CTkFrame(edit_window)
             entry_frame.pack(pady=10)
@@ -75,9 +77,8 @@ class DepartmentListWindow(customtkinter.CTkToplevel):
             new_student_id_combobox.pack(side='left', padx=5)
 
 
-            save_button = customtkinter.CTkButton(edit_window, text=self.il8n.save_changes,
-                                        command=lambda: (lambda: self.save_changes(edit_window, department_id,
-                                        new_dept_entry.get(), new_student_id_combobox.get())))
+            save_button = customtkinter.CTkButton(edit_window, text=self.il8n.save_changes, command=lambda: 
+                                                  self.save_changes(edit_window, department_id, new_dept_entry.get(), new_student_id_combobox.get()))
             
             save_button.pack(pady=10)
 
@@ -114,8 +115,8 @@ class DepartmentManagementWindow(customtkinter.CTkToplevel):
         super().__init__()
         self.il8n = languagepack.I18N(language='en')
         self.title(self.il8n.department_management)
-        self.geometry("600x500")
-        
+        self.geometry("600x375")
+        self.grab_set()
         self.db = StudentInfoSystem()
 
         self.create_widgets()
@@ -187,3 +188,5 @@ class DepartmentManagementWindow(customtkinter.CTkToplevel):
         
         department_list_window = DepartmentListWindow(self, self.db)
         department_list_window.show_departments()
+        department_list_window.grab_set()
+        department_list_window.wait_window()

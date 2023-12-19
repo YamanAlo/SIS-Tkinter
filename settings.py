@@ -8,8 +8,9 @@ class SettingsWindow(customtkinter.CTkToplevel):
         super().__init__()
         self.il8n = languagepack.I18N(language='en')
         self.title(self.il8n.settings)
-        self.geometry("400x300")
+        self.geometry("400x150")
         self.dashboard_window = dashboard_window
+        self.grab_set()
         
         
         language_options = [self.il8n.english, self.il8n.arabic, self.il8n.turkish]
@@ -17,7 +18,7 @@ class SettingsWindow(customtkinter.CTkToplevel):
         self.language_selector.pack(pady=10)
 
         # Button to apply settings
-        self.apply_button = customtkinter.CTkButton(self, text=self.il8n.apply_changes, command=self.apply_changes , hover_color="grey")
+        self.apply_button = customtkinter.CTkButton(self, text=self.il8n.apply_changes, command=self.apply_changes)
         self.apply_button.pack(pady=20)
 
     def apply_changes(self):
@@ -33,4 +34,4 @@ class SettingsWindow(customtkinter.CTkToplevel):
 
         self.dashboard_window.update_language(language)
 
-        msg.CTkMessagebox(title=self.il8n.settings, message=f"{self.il8n.language_set_to} {language}", icon="check", option_1=self.il8n.thanks , button_hover_color="grey")
+        msg.CTkMessagebox(title=self.il8n.settings, message=f"{self.il8n.language_set_to} {language}", icon="check", option_1=self.il8n.thanks)
