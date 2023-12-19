@@ -31,7 +31,7 @@ class CourseListWindow(customtkinter.CTkToplevel):
         for course in courses:
             label_text = f"{self.il8n.course_id}: {course[0]}, {self.il8n.course_name}: {course[1]}, {self.il8n.course_code}: {course[2]}"
             label = customtkinter.CTkLabel(self.course_list_frame, text=label_text)
-            label.bind("<Button-3>", lambda event, id=course[0]: self.show_context_menu(event, id=id))
+            label.bind("<Button-3>", lambda event, id=course[0]: self.show_context_menu(event, id))
             label.pack()
 
      
@@ -120,7 +120,7 @@ class CourseManagementWindow(customtkinter.CTkToplevel):
         super().__init__()
         self.il8n = languagepack.I18N(language='en')
         self.title(self.il8n.course_management)
-        self.geometry("600x500")
+        self.geometry("600x375")
 
         self.course_name_label = customtkinter.CTkLabel(self, text= self.il8n.course_name)
         self.course_name_label.pack(pady=10)

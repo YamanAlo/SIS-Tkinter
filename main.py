@@ -14,7 +14,7 @@ import languagepack
 class DashboardWindow(customtkinter.CTk):
     def __init__(self):
         super().__init__()
-        self.geometry("600x400")
+        self.geometry("600x325")
         self.db = database.StudentInfoSystem()
         self.il8n = languagepack.I18N(language='en')  # Default language is set to English
         self.title(self.il8n.dashboard)

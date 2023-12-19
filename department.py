@@ -114,7 +114,7 @@ class DepartmentManagementWindow(customtkinter.CTkToplevel):
         super().__init__()
         self.il8n = languagepack.I18N(language='en')
         self.title(self.il8n.department_management)
-        self.geometry("600x500")
+        self.geometry("600x375")
         
         self.db = StudentInfoSystem()
 
