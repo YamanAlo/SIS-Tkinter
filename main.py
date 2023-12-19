@@ -22,6 +22,13 @@ class DashboardWindow(customtkinter.CTk):
         
         self.create_widgets()
 
+    def set_apperance(self):
+            if sm1_value.get() == 1:
+                customtkinter.set_appearance_mode("dark")
+            else:
+                customtkinter.set_appearance_mode("light")
+
+    
     def create_widgets(self):
 
         # Button for creating the database and use the translation
@@ -53,6 +60,12 @@ class DashboardWindow(customtkinter.CTk):
         self.settings_button = customtkinter.CTkButton(self, text=self.il8n.settings, command=self.open_settings)
         self.settings_button.pack(pady=10)
         self.settings_button.configure(font=("Arial ",13))
+
+        global sm1_value
+        sm1_value = customtkinter.IntVar(value=1)
+        sm1 = customtkinter.CTkSwitch(self, text="Switch theme", variable=sm1_value, command=self.set_apperance)
+        sm1.pack(pady=10)
+    
 
 
     def open_student_mgmt(self):
