@@ -35,13 +35,13 @@ class I18N:
         self.add_student = "Add Student"
         self.update_student = "Update Student"
         self.delete_student = "Delete Student"
-        self.student_management = "Student Management"
+        self.student_management = "Manage Student"
         self.course_name = "Course Name"
         self.course_code = "Course Code"
         self.add_course = "Add Course"
         self.update_course = "Update Course"
         self.delete_course = "Delete Course"
-        self.course_management = "Course Management"
+        self.course_management = "Manage Course"
         self.language = "Language"
         self.apply_changes = "Apply Changes"
         self.create_database = "Create Database"
@@ -102,7 +102,7 @@ class I18N:
         self.are_you_sure_delete_department = "Are you sure you want to delete this department?"
         self.department_deleted_successfully = "Department deleted successfully."
         self.failed_delete_department = "Failed to delete department."
-        self.department_management = "Department Management"
+        self.department_management = "Manage Department"
         self.add_department = "Add Department"
         self.show_departments = "Show Departments"
         self.department_added_success = "Department added successfully."
@@ -298,7 +298,7 @@ class I18N:
                 key, value = line.strip().split('=')
                 language_data[key] = value
         
-        # set the data
+       
         self.student_id = language_data['student_id']
         self.first_name = language_data['first_name']
         self.last_name = language_data['last_name']
@@ -309,13 +309,13 @@ class I18N:
         self.add_student = language_data['add_student']
         self.update_student = language_data['update_student']
         self.delete_student = language_data['delete_student']
-        self.student_management = language_data['student_management']
+        self.student_management = language_data['manage_student']
         self.course_name = language_data['course_name']
         self.course_code = language_data['course_code']
         self.add_course = language_data['add_course']
         self.update_course = language_data['update_course']
         self.delete_course = language_data['delete_course']
-        self.course_management = language_data['course_management']
+        self.course_management = language_data['manage_course']
         self.language = language_data['language']
         self.apply_changes = language_data['apply_changes']
         self.create_database = language_data['create_database']
@@ -376,7 +376,7 @@ class I18N:
         self.are_you_sure_delete_department = language_data['are_you_sure_delete_department']
         self.department_deleted_successfully = language_data['department_deleted_successfully']
         self.failed_delete_department = language_data['failed_delete_department']
-        self.department_management = language_data['department_management']
+        self.department_management = language_data['manage_department']
         self.add_department = language_data['add_department']
         self.show_departments = language_data['show_departments'] 
         self.department_added_success = language_data['department_added_success']

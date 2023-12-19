@@ -8,7 +8,7 @@ from CTkXYFrame import CTkXYFrame
 class StudentListWindow(ctk.CTkToplevel):
     def __init__(self, parent, db):
         super().__init__(parent)
-        self.il8n = languagepack.I18N(language='tr')
+        self.il8n = languagepack.I18N(language='en')
         self.title(self.il8n.show_list)
         self.geometry("800x400")
         self.parent = parent
@@ -44,7 +44,7 @@ class StudentListWindow(ctk.CTkToplevel):
 
             edit_window = ctk.CTkToplevel(self)
             edit_window.title(self.il8n.edit_student)
-            edit_window.geometry("750x200")
+            edit_window.geometry("800x301")
 
             entry_frame = CTkXYFrame(edit_window, width=750, height=200,
                                          scrollbar_fg_color="blue",
@@ -120,7 +120,7 @@ class StudentListWindow(ctk.CTkToplevel):
             save_button.pack(pady=10)
             
     def save_changes(self, edit_window, student_id, first_name, last_name, email, phone, address, city):
-        # Validate data entry   
+         
         if not student_id or not first_name or not last_name or not email or not phone or not address or not city:
             msg.CTkMessagebox(title=self.il8n.error, message=self.il8n.required_fields, icon="cancel")
             return
@@ -164,8 +164,8 @@ class StudentListWindow(ctk.CTkToplevel):
         try:
             self.db.update_student(student_id, first_name, last_name, email, phone, address, city)
             msg.CTkMessagebox(title=self.il8n.success, message=self.il8n.student_updated, icon="check" , option_1=self.il8n.thanks)
-            self.show_students_list()  # Refresh the student list after update
-            edit_window.destroy()  # Close the edit window
+            self.show_students_list()  
+            edit_window.destroy()  
         except Exception as e:
             msg.CTkMessagebox(title=self.il8n.error, message=f"{self.il8n.failed_update_student}: {e}", icon="cancel")
 
@@ -173,7 +173,7 @@ class StudentListWindow(ctk.CTkToplevel):
         try:
             self.db.delete_student(student_id)
             messagebox.showinfo(title=self.il8n.confirm_deletion, message=self.il8n.confirm_delete_student)
-            self.show_students_list()  # Refresh the course list after deletion
+            self.show_students_list()  
         except Exception as e:
             msg.CTkMessagebox(title=self.il8n.error, message=f"{self.il8n.failed_remove_student}: {e}", icon="cancel")
 
@@ -181,7 +181,7 @@ class StudentManagementWindow(ctk.CTkToplevel):
     def __init__(self):
         super().__init__()
         self.geometry("900x650")
-        self.il8n = languagepack.I18N(language='tr')
+        self.il8n = languagepack.I18N(language='en')
         self.title(self.il8n.student_management)
     
         # Student ID

@@ -11,7 +11,7 @@ class SettingsWindow(customtkinter.CTkToplevel):
         self.geometry("400x300")
         self.dashboard_window = dashboard_window
         
-        # Dropdown or other widgets for settings like language
+        
         language_options = [self.il8n.english, self.il8n.arabic, self.il8n.turkish]
         self.language_selector = customtkinter.CTkComboBox(self, values=language_options)
         self.language_selector.pack(pady=10)

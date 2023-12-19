@@ -4,13 +4,13 @@ from tkinter import ttk
 from database import StudentInfoSystem
 import CTkMessagebox as msg
 import languagepack
-from CTkXYFrame import CTkXYFrame
+
 
 
 class CourseListWindow(customtkinter.CTkToplevel):
     def __init__(self, parent, db):
         super().__init__(parent)
-        self.il8n = languagepack.I18N(language='tr')
+        self.il8n = languagepack.I18N(language='en')
         self.title(self.il8n.course_list)
         self.geometry("400x300")
         self.parent = parent
@@ -118,7 +118,7 @@ class CourseListWindow(customtkinter.CTkToplevel):
 class CourseManagementWindow(customtkinter.CTkToplevel):
     def __init__(self):
         super().__init__()
-        self.il8n = languagepack.I18N(language='tr')
+        self.il8n = languagepack.I18N(language='en')
         self.title(self.il8n.course_management)
         self.geometry("600x500")
 
