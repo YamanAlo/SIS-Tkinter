@@ -10,7 +10,7 @@ from CTkXYFrame import CTkXYFrame
 class StudentListWindow(ctk.CTkToplevel):
     def __init__(self, parent, db):
         super().__init__(parent)
-        self.il8n = languagepack.I18N(language='en')
+        self.il8n = languagepack.I18N(language='tr')
         self.title(self.il8n.show_list)
         self.geometry("900x400")
         self.parent = parent

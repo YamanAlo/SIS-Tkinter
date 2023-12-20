@@ -10,7 +10,7 @@ from course_list import CourseListWindow
 class CourseManagementWindow(customtkinter.CTkToplevel):
     def __init__(self):
         super().__init__()
-        self.il8n = languagepack.I18N(language='en')
+        self.il8n = languagepack.I18N(language='ar')
         self.title(self.il8n.course_management)
         self.geometry("600x375")
         self.grab_set()

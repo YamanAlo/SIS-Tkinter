@@ -9,7 +9,7 @@ import customtkinter
 class CourseListWindow(customtkinter.CTkToplevel):
     def __init__(self, parent, db):
         super().__init__(parent)
-        self.il8n = languagepack.I18N(language='en')
+        self.il8n = languagepack.I18N(language='ar')
         self.title(self.il8n.course_list)
         self.geometry("400x300")
         self.parent = parent
