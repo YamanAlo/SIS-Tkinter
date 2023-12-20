@@ -111,6 +111,8 @@ class I18N:
         self.no = "No"
         self.edit_student_id = "Edit Student ID"
         self.select_student_id = "Select Student ID"
+        self.course_updated_success = "Course updated successfully."
+        self.SwitchTheme = "Switch Theme"
         
     def load_data_in_turkish(self):
         self.student_id = "Öğrenci Numarası"
@@ -199,7 +201,8 @@ class I18N:
         self.no = "Hayır"
         self.edit_student_id = "Öğrenci Numarasını Düzenle"
         self.select_student_id = "Öğrenci Numarasını Seçin"
-
+        self.course_updated_success = "Ders başarıyla güncellendi."
+        self.SwitchTheme = "Tema Değiştir"
 
     def load_data_in_arabic(self):
         self.student_id = "رقم الطالب"
@@ -288,7 +291,8 @@ class I18N:
         self.no = "لا"
         self.edit_student_id = "تحرير معرف الطالب"
         self.select_student_id = "حدد معرف الطالب"
-
+        self.course_updated_success = "تم تحديث الدورة بنجاح."
+        self.SwitchTheme = "تبديل الموضوع"
 
     def load_data_from_file(self, language):
         language_data = {}
@@ -385,7 +389,8 @@ class I18N:
         self.no = language_data['no']
         self.edit_student_id = language_data['edit_student_id']
         self.select_student_id = language_data['select_student_id']
-    
+        self.course_updated_success = language_data['course_updated_success']   
+        self.SwitchTheme = language_data['SwitchTheme']
 
 
         

@@ -85,3 +85,5 @@ yes=نعم
 no=لا
 edit_student_id=تحرير معرف الطالب
 select_student_id=حدد معرف الطالب
+course_updated_success=تم تحديث الدورة بنجاح.
+SwitchTheme= تغيير المظهر

@@ -85,3 +85,5 @@ yes=Yes
 no=No
 edit_student_id=Edit Student ID
 select_student_id=Select Student ID
+course_updated_success=Course updated successfully.
+SwitchTheme= Switch Theme

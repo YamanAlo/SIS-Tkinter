@@ -85,3 +85,5 @@ yes=Evet
 no=Hayır
 edit_student_id=Öğrenci Numarasını Düzenle
 select_student_id=Öğrenci Numarasını Seçin
+course_updated_success=Ders başarıyla güncellendi.
+SwitchTheme=Tema Değiştir

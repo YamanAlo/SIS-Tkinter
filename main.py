@@ -63,8 +63,8 @@ class DashboardWindow(customtkinter.CTk):
 
         global sm1_value
         sm1_value = customtkinter.IntVar(value=1)
-        sm1 = customtkinter.CTkSwitch(self, text="Switch theme", variable=sm1_value, command=self.set_apperance)
-        sm1.pack(pady=10)
+        self.sm1 = customtkinter.CTkSwitch(self, text=self.il8n.SwitchTheme, variable=sm1_value, command=self.set_apperance)
+        self.sm1.pack(pady=10)
     
 
 
@@ -107,6 +107,7 @@ class DashboardWindow(customtkinter.CTk):
         self.clear_db_button.configure(text=self.il8n.clear_database)
         self.settings_button.configure(text=self.il8n.settings)
         self.dept_mgmt_button.configure(text=self.il8n.department_management)
+        self.sm1.configure(text=self.il8n.SwitchTheme)
 
       
        
