@@ -36,10 +36,10 @@ first_name_alpha= فقط احرف على الاول الاسم يحتوي ان �
 last_name_alpha= فقط احرف على الاخير الاسم يحتوي ان يجب .
 email_format=و @ و ارقام و فقط احرف على الاكتروني البريد يحتوي ان يجب  .
 success=نجاح
-student_updated=بنجاح الطالب تحديث تم
+student_updated= تم تحديث معلومات الطالب بنجاح
 failed_update_student=الطالب تحديث فشل.
 confirm_deletion=الحذف تأكيد
-confirm_delete_student=؟الطالب هذا حذف تريد انك متأكد أنت هل
+confirm_delete_student= هل انت متأكد انك تريد حذف هذا الطالب؟
 failed_remove_student=الطالب حذف فشل .
 student_added_success=بنجاح الطالب اضافة تمت
 failed_add_student=الطالب اضافة فشل .
@@ -73,7 +73,7 @@ department_name=القسم اسم
 edit_department=القسم تحرير
 department_updated_successfully=بنجاح القسم تحديث تم.
 failed_update_department=القسم تحديث فشل .
-are_you_sure_delete_department=؟ القسم هذا حذف تريد أنك متأكد أنت هل
+are_you_sure_delete_department= هل انت متأكد انك تريد حذف هذا القسم؟
 department_deleted_successfully=بنجاح القسم حذف تم.
 failed_delete_department=القسم حذف فشل.
 department_management= ادارة القسم

@@ -28,11 +28,7 @@ class I18N:
         return
         
     def load_data_in_turkish(self):
-        show_list_title = "Öğrenci Listesi"
-        edit_student_title = "Öğrenci Düzenle"
-        edit_course_title = "Ders Düzenle"
-        edit_department_title = "Bölüm Düzenle"
-        
+        return
         
 
     def load_data_in_arabic(self):
