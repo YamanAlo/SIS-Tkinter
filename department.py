@@ -7,17 +7,23 @@ import languagepack
 import customtkinter
 from tkinter import messagebox, Menu
 from department_list import DepartmentListWindow
-
+import sqlite3
 class DepartmentManagementWindow(customtkinter.CTkToplevel):
     def __init__(self):
         super().__init__()
-        self.il8n = languagepack.I18N(language='en')
+        self.il8n = languagepack.I18N(language='ar')
         self.title(self.il8n.department_management)
         self.geometry("600x375")
         self.grab_set()
         self.db = StudentInfoSystem()
 
         self.create_widgets()
+
+
+    def clear_entries(self):
+        self.department_name_entry.delete(0, 'end')
+        
+
 
     def create_widgets(self):
         
@@ -78,8 +84,9 @@ class DepartmentManagementWindow(customtkinter.CTkToplevel):
         try:
             
             self.db.add_department(department_name, student_id)
+            self.clear_entries()
             msg.CTkMessagebox(title=self.il8n.success, message=self.il8n.department_added_success, icon="check", option_1=self.il8n.thanks)
-        except Exception as e:
+        except sqlite3.Error as e:
             msg.CTkMessagebox(title=self.il8n.error, message=f"{self.il8n.failed_add_department}: {str(e)}", icon="cancel")
 
     def show_departments(self):

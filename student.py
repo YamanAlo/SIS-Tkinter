@@ -5,13 +5,13 @@ from database import StudentInfoSystem
 import CTkMessagebox as msg
 import languagepack
 from student_list import StudentListWindow
-
+import sqlite3
         
 class StudentManagementWindow(ctk.CTkToplevel):
     def __init__(self):
         super().__init__()
         self.geometry("900x650")
-        self.il8n = languagepack.I18N(language='tr')
+        self.il8n = languagepack.I18N(language='ar')
         self.title(self.il8n.student_management)
         self.grab_set()
     
@@ -68,6 +68,17 @@ class StudentManagementWindow(ctk.CTkToplevel):
         # Create the database connection
         self.db = StudentInfoSystem()
 
+
+
+    def clear_entries(self):
+        self.student_id_entry.delete(0, 'end')
+        self.first_name_entry.delete(0, 'end')
+        self.last_name_entry.delete(0, 'end')
+        self.email_entry.delete(0, 'end')
+        self.phone_entry.delete(0, 'end')
+        self.address_entry.delete(0, 'end')
+        self.city_entry.delete(0, 'end')
+
     def add_student(self):
         student_id = self.student_id_entry.get()
         student_first_name = self.first_name_entry.get()
@@ -119,9 +130,11 @@ class StudentManagementWindow(ctk.CTkToplevel):
         try:
             self.db.add_student(student_id, student_first_name, student_last_name, student_email, student_phone, student_address, student_city)
             self.grab_release()
+            self.clear_entries()
+            self.student_id_entry.focus_set()
             msg.CTkMessagebox(title=self.il8n.success, message=self.il8n.student_added_success, icon="check", option_1=self.il8n.thanks)
-        except Exception as e:
-            msg.CTkMessagebox(title=self.il8n.error, message=self.il8n.failed_add_student, icon="cancel")
+        except sqlite3.Error as e:
+            msg.CTkMessagebox(title=self.il8n.error, message=f"{self.il8n.failed_add_student}:  {str(e)}", icon="cancel")
 
     def show_students_list(self):
         student_list_window = StudentListWindow(self, self.db)

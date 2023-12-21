@@ -3,13 +3,13 @@ import customtkinter
 from tkinter import messagebox, Menu
 import CTkMessagebox as msg
 from tkinter import ttk
-
+import sqlite3
 
 class DepartmentListWindow(customtkinter.CTkToplevel):
     def __init__(self, parent, db):
         super().__init__(parent)
-        self.il8n = languagepack.I18N(language='en')
-        self.title(self.il8n.department_list)
+        self.il8n = languagepack.I18N(language='ar')
+        self.title(self.il8n.show_list_title)
         self.geometry("400x300")
         self.parent = parent
         self.db = db
@@ -46,7 +46,7 @@ class DepartmentListWindow(customtkinter.CTkToplevel):
             self.selected_department_id = department_id
 
             edit_window = customtkinter.CTkToplevel(self)
-            edit_window.title(self.il8n.edit_department)
+            edit_window.title(self.il8n.edit_department_title)
             edit_window.geometry("750x200")
             edit_window.grab_set()
 
@@ -91,7 +91,7 @@ class DepartmentListWindow(customtkinter.CTkToplevel):
             self.show_departments()
             self.grab_release()
             edit_window.destroy()
-        except Exception as e:
+        except sqlite3.Error as e:
            msg.CTkMessagebox(title=self.il8n.error, message=f"{self.il8n.failed_update_department}: {str(e)}, icon='cancel'")
 
     def delete_department(self, department_id):
@@ -103,7 +103,7 @@ class DepartmentListWindow(customtkinter.CTkToplevel):
                 self.show_departments()
                 self.grab_release()
                 
-            except Exception as e:
+            except sqlite3.Error as e:
                messagebox.showerror(self.il8n.error, f"{self.il8n.failed_delete_department}: {str(e)}, icon='cancel'")
 
 

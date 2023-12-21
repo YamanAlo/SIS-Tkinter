@@ -10,8 +10,8 @@ from CTkXYFrame import CTkXYFrame
 class StudentListWindow(ctk.CTkToplevel):
     def __init__(self, parent, db):
         super().__init__(parent)
-        self.il8n = languagepack.I18N(language='tr')
-        self.title(self.il8n.show_list)
+        self.il8n = languagepack.I18N(language='ar')
+        self.title(self.il8n.show_list_title)
         self.geometry("900x400")
         self.parent = parent
         self.db = db 
@@ -48,7 +48,7 @@ class StudentListWindow(ctk.CTkToplevel):
             self.selected_student_id = student_id
 
             edit_window = ctk.CTkToplevel(self)
-            edit_window.title(self.il8n.edit_student)
+            edit_window.title(self.il8n.edit_student_title)
             edit_window.geometry("800x301")
             edit_window.grab_set()
 
@@ -175,7 +175,7 @@ class StudentListWindow(ctk.CTkToplevel):
             self.show_students_list()
             self.grab_release()
             edit_window.destroy()  
-        except Exception as e:
+        except sqlite3.Error as e:
             msg.CTkMessagebox(title=self.il8n.error, message=f"{self.il8n.failed_update_student}: {e}", icon="cancel")
         
         
@@ -186,5 +186,5 @@ class StudentListWindow(ctk.CTkToplevel):
             messagebox.showinfo(title=self.il8n.confirm_deletion, message=self.il8n.confirm_delete_student)
             self.show_students_list()  
             self.grab_release()
-        except Exception as e:
-            msg.CTkMessagebox(title=self.il8n.error, message=f"{self.il8n.failed_remove_student}: {e}", icon="cancel")
+        except sqlite3.Error as e:
+            msg.CTkMessagebox(title=self.il8n.error, message=f"{self.il8n.failed_remove_student}: {str(e)}", icon="cancel")

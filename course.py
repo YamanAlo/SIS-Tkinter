@@ -5,7 +5,7 @@ from database import StudentInfoSystem
 import CTkMessagebox as msg
 import languagepack
 from course_list import CourseListWindow
-
+import sqlite3
 
 class CourseManagementWindow(customtkinter.CTkToplevel):
     def __init__(self):
@@ -32,7 +32,13 @@ class CourseManagementWindow(customtkinter.CTkToplevel):
         self.show_list_button = customtkinter.CTkButton(self, text=self.il8n.show_list, command=self.show_course_list)
         self.show_list_button.pack(pady=20)
 
-        self.db = StudentInfoSystem()
+        self.db = StudentInfoSystem() 
+
+
+    def clear_entries(self):
+        self.course_name_entry.delete(0, 'end')
+        self.course_code_entry.delete(0, 'end')
+
 
     def add_course(self):
         course_name = self.course_name_entry.get()
@@ -54,8 +60,10 @@ class CourseManagementWindow(customtkinter.CTkToplevel):
             return
         try:
             self.db.add_course(course_name, course_code, "")
+            self.clear_entries()
+            self.course_name_entry.focus()
             msg.CTkMessagebox(title=self.il8n.success, message=self.il8n.course_added_success, icon="check", option_1=self.il8n.thanks)
-        except Exception as e:
+        except sqlite3.Error as e:
             msg.CTkMessagebox(title=self.il8n.error, message=f"{self.il8n.failed_add_course}: {str(e)}", icon="cancel")
 
     def show_course_list(self):

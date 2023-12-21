@@ -10,7 +10,7 @@ class CourseListWindow(customtkinter.CTkToplevel):
     def __init__(self, parent, db):
         super().__init__(parent)
         self.il8n = languagepack.I18N(language='ar')
-        self.title(self.il8n.course_list)
+        self.title(self.il8n.show_list_title)
         self.geometry("400x300")
         self.parent = parent
         self.db = db
@@ -51,7 +51,7 @@ class CourseListWindow(customtkinter.CTkToplevel):
             self.selected_course_id = course_id
         
             edit_window = customtkinter.CTkToplevel(self)
-            edit_window.title(self.il8n.edit_course)
+            edit_window.title(self.il8n.edit_course_title)
             edit_window.geometry("750x200")
             edit_window.grab_set()
 
@@ -105,7 +105,7 @@ class CourseListWindow(customtkinter.CTkToplevel):
             self.show_course_list()
             self.grab_release()
             edit_window.destroy()
-        except Exception as e:
+        except sqlite3.Error as e:
             messagebox.showerror(title=self.il8n.error, message=f"{self.il8n.failed_add_course}: {str(e)}")
 
     def delete_course(self, course_id):
@@ -116,5 +116,5 @@ class CourseListWindow(customtkinter.CTkToplevel):
                 messagebox.showinfo(self.il8n.success, self.il8n.course_deleted_successfully)
                 self.show_course_list()
                 self.grab_release()
-            except Exception as e:
+            except sqlite3.Error as e:
                 messagebox.showerror(self.il8n.error, f"{self.il8n.failed_delete_course}: {str(e)}")

@@ -28,11 +28,15 @@ class I18N:
         return
         
     def load_data_in_turkish(self):
-        return
+        show_list_title = "Öğrenci Listesi"
+        edit_student_title = "Öğrenci Düzenle"
+        edit_course_title = "Ders Düzenle"
+        edit_department_title = "Bölüm Düzenle"
+        
         
 
     def load_data_in_arabic(self):
-        return
+        return        
         
     def load_data_from_file(self, language):
         language_data = {}
@@ -130,7 +134,12 @@ class I18N:
         self.edit_student_id = language_data['edit_student_id']
         self.select_student_id = language_data['select_student_id']
         self.course_updated_success = language_data['course_updated_success']   
-        self.SwitchTheme = language_data['SwitchTheme']
+        self.Switch_Theme = language_data['Switch_Theme']
+        self.show_list_title = language_data['show_list_title']
+        self.edit_student_title = language_data['edit_student_title']
+        self.edit_course_title = language_data['edit_course_title']
+        self.edit_department_title = language_data['edit_department_title']
+          
 
 
         
