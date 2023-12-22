@@ -10,7 +10,7 @@ class DepartmentListWindow(customtkinter.CTkToplevel):
         super().__init__(parent)
         self.il8n = languagepack.I18N(language= language)
         self.title(self.il8n.show_list_title)
-        self.geometry("400x300")
+        self.geometry("600x300")
         self.parent = parent
         self.db = db
 
