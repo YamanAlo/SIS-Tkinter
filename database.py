@@ -134,8 +134,31 @@ class StudentInfoSystem:
         self.cursor.execute("UPDATE courses SET course_name=?, course_code=?, course_description=? WHERE course_id=?", (course_name, course_code, course_description, course_id))
         self.conn.commit()
         self.conn.close()
+    
+    def course_exists(self, course_name, course_code):
+        self.conn = self.connect()
+        self.cursor = self.conn.cursor()
+        self.cursor.execute("SELECT * FROM courses WHERE course_name=? AND course_code=?", (course_name, course_code))
+        rows = self.cursor.fetchall()
+        self.conn.close()
+        return rows
+    
+    def course_name_exists(self, course_name):
+        self.conn = self.connect()
+        self.cursor = self.conn.cursor()
+        self.cursor.execute("SELECT * FROM courses WHERE course_name=?", (course_name,))
+        rows = self.cursor.fetchall()
+        self.conn.close()
+        return rows
 
-
+    def course_code_exists(self, course_code):
+        self.conn = self.connect()
+        self.cursor = self.conn.cursor()
+        self.cursor.execute("SELECT * FROM courses WHERE course_code=?", (course_code,))
+        rows = self.cursor.fetchall()
+        self.conn.close()
+        return rows
+        
     def add_department(self, department_name,student_id):
         self.conn = self.connect()
         self.cursor = self.conn.cursor()
@@ -163,6 +186,22 @@ class StudentInfoSystem:
         self.conn = self.connect()
         self.cursor = self.conn.cursor()
         self.cursor.execute("SELECT department.department_id, department.department_name, student.student_id FROM department LEFT JOIN student ON department.student_id = student.student_id")
+        rows = self.cursor.fetchall()
+        self.conn.close()
+        return rows
+    
+    def get_department_by_name(self, department_name, student_id):
+        self.conn = self.connect()
+        self.cursor = self.conn.cursor()
+        self.cursor.execute("SELECT * FROM department WHERE department_name=? AND student_id=?", (department_name, student_id))
+        rows = self.cursor.fetchall()
+        self.conn.close()
+        return rows
+    
+    def get_department_by_student_id(self, student_id):
+        self.conn = self.connect()
+        self.cursor = self.conn.cursor()
+        self.cursor.execute("SELECT * FROM department WHERE student_id=?", (student_id,))
         rows = self.cursor.fetchall()
         self.conn.close()
         return rows

@@ -26,14 +26,13 @@ class I18N:
 
     def load_data_in_english(self):
         return
-        
+    
     def load_data_in_turkish(self):
         return
-        
-
+    
     def load_data_in_arabic(self):
-        return        
-        
+        return
+    
     def load_data_from_file(self, language):
         language_data = {}
         language_file = f'data_{language}.lng'
@@ -135,9 +134,14 @@ class I18N:
         self.edit_student_title = language_data['edit_student_title']
         self.edit_course_title = language_data['edit_course_title']
         self.edit_department_title = language_data['edit_department_title']
-          
-
-
+        self.failed_update_course = language_data['failed_update_course']
+        self.already_exists = language_data['already_exists']
+        self.department_already_exists = language_data['department_already_exists']
+        self.course_name_already_exists = language_data['course_name_already_exists']
+        self.code_already_exists = language_data['code_already_exists']
+        self.name_code_already_exists = language_data['name_code_already_exists']
+        self.department_already_exists_for_student = language_data['department_already_exists_for_student']
+        self.deleted_student_success = language_data['deleted_student_success']
         
     @staticmethod
     def get_available_languages():

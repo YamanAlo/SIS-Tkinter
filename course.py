@@ -8,9 +8,10 @@ from course_list import CourseListWindow
 import sqlite3
 
 class CourseManagementWindow(customtkinter.CTkToplevel):
-    def __init__(self):
+    def __init__(self, dashboard_window):
         super().__init__()
-        self.il8n = languagepack.I18N(language='ar')
+        self.dashboard_window = dashboard_window
+        self.il8n = self.dashboard_window.il8n
         self.title(self.il8n.course_management)
         self.geometry("600x375")
         self.grab_set()
@@ -44,6 +45,20 @@ class CourseManagementWindow(customtkinter.CTkToplevel):
         course_name = self.course_name_entry.get()
         course_code = self.course_code_entry.get()
 
+    
+        if self.db.course_exists(course_name, course_code):
+            msg.CTkMessagebox(title=self.il8n.error, message=self.il8n.name_code_already_exists, icon="cancel")
+            return
+        
+        if self.db.course_name_exists(course_name):
+            msg.CTkMessagebox(title=self.il8n.error, message=self.il8n.course_name_already_exists, icon="cancel")
+            return
+        
+        
+        if self.db.course_code_exists(course_code):
+            msg.CTkMessagebox(title=self.il8n.error, message=self.il8n.code_already_exists, icon="cancel")
+            return
+
         if not course_name or not course_code:
             msg.CTkMessagebox(title=self.il8n.error, message=self.il8n.enter_required_fields, icon="cancel")
             return
@@ -67,11 +82,30 @@ class CourseManagementWindow(customtkinter.CTkToplevel):
             msg.CTkMessagebox(title=self.il8n.error, message=f"{self.il8n.failed_add_course}: {str(e)}", icon="cancel")
 
     def show_course_list(self):
-        course_list_window = CourseListWindow(self, self.db)
+        course_list_window = CourseListWindow(self, self.db,self.dashboard_window.selected_language)
         course_list_window.show_course_list()   
         course_list_window.grab_set()
         course_list_window.wait_window()
         
+    def update_language(self):
+        self.il8n = self.dashboard_window.il8n
+        self.title(self.il8n.course_management)
+        self.course_name_label.configure(text=self.il8n.course_name)
+        self.course_code_label.configure(text=self.il8n.course_code)
+        self.add_course_button.configure(text=self.il8n.add_course)
+        self.show_list_button.configure(text=self.il8n.show_list)
+        self.error_message = self.il8n.error
+        self.required_fields_message = self.il8n.enter_required_fields
+        self.no_spaces_allowed_message = self.il8n.no_spaces_allowed
+        self.no_numbers_allowed_message = self.il8n.no_numbers
+        self.course_added_success_message = self.il8n.course_added_success
+        self.failed_add_course_message = self.il8n.failed_add_course
+        self.error_message = self.il8n.error
+        self.thanks_message = self.il8n.thanks
+        self.success_message = self.il8n.success
+        self.course_name_already_exists_message = self.il8n.course_name_already_exists
+        self.code_already_exists_message = self.il8n.code_already_exists
+        self.name_code_already_exists_message = self.il8n.name_code_already_exists
 
 
 

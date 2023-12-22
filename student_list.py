@@ -8,13 +8,14 @@ from CTkXYFrame import CTkXYFrame
 
 
 class StudentListWindow(ctk.CTkToplevel):
-    def __init__(self, parent, db):
+    def __init__(self, parent, db,language):
         super().__init__(parent)
-        self.il8n = languagepack.I18N(language='ar')
+        self.il8n = languagepack.I18N(language= language)
+        
         self.title(self.il8n.show_list_title)
         self.geometry("900x400")
         self.parent = parent
-        self.db = db 
+        self.db = db
 
         self.students_list_frame = ctk.CTkFrame(self)
         self.students_list_frame.pack(pady=20)
@@ -181,10 +182,48 @@ class StudentListWindow(ctk.CTkToplevel):
         
 
     def delete_student(self, student_id):
-        try:
-            self.db.delete_student(student_id)
-            messagebox.showinfo(title=self.il8n.confirm_deletion, message=self.il8n.confirm_delete_student)
-            self.show_students_list()  
-            self.grab_release()
-        except sqlite3.Error as e:
-            msg.CTkMessagebox(title=self.il8n.error, message=f"{self.il8n.failed_remove_student}: {str(e)}", icon="cancel")
+        confirm = messagebox.askyesno(title=self.il8n.confirm_deletion, message=self.il8n.confirm_delete_student)
+        if confirm:
+            try:
+                self.db.delete_student(student_id)
+                messagebox.showinfo(title=self.il8n.success, message=self.il8n.deleted_student_success)
+                self.show_students_list()  
+                self.grab_release()
+            except sqlite3.Error as e:
+                msg.CTkMessagebox(title=self.il8n.error, message=f"{self.il8n.failed_remove_student}: {str(e)}", icon="cancel")
+
+
+    def update_language(self, language):
+        print("Updating language to", language)
+        self.il8n = self.dashboard_window.il8n
+        self.title(self.il8n.show_list_title)
+        self.edit = self.il8n.edit
+        self.delete = self.il8n.delete
+        self.confirm_deletion = self.il8n.confirm_deletion
+        self.confirm_delete_student = self.il8n.confirm_delete_student
+        self.title(self.il8n.edit_student_title)
+        self.save_changes = self.il8n.save_changes          
+        self.student_id = self.il8n.student_id
+        self.first_name = self.il8n.first_name
+        self.last_name = self.il8n.last_name
+        self.email = self.il8n.email
+        self.phone = self.il8n.phone
+        self.address = self.il8n.address
+        self.city = self.il8n.city
+        self.required_fields = self.il8n.required_fields
+        self.no_spaces_allowed = self.il8n.no_spaces_allowed
+        self.no_numbers_allowed = self.il8n.no_numbers_allowed
+        self.student_id_number = self.il8n.student_id_number
+        self.phone_number = self.il8n.phone_number
+        self.first_name_alpha = self.il8n.first_name_alpha
+        self.last_name_alpha = self.il8n.last_name_alpha
+        self.email_format = self.il8n.email_format
+        self.error = self.il8n.error
+        self.success = self.il8n.success
+        self.thanks = self.il8n.thanks
+        self.student_updated = self.il8n.student_updated
+        self.failed_update_student = self.il8n.failed_update_student
+        self.failed_remove_student = self.il8n.failed_remove_student
+        self.edit_student_title = self.il8n.edit_student_title
+
+        

@@ -7,9 +7,9 @@ import customtkinter
 
 
 class CourseListWindow(customtkinter.CTkToplevel):
-    def __init__(self, parent, db):
+    def __init__(self, parent, db, language):
         super().__init__(parent)
-        self.il8n = languagepack.I18N(language='ar')
+        self.il8n = languagepack.I18N(language=language)
         self.title(self.il8n.show_list_title)
         self.geometry("400x300")
         self.parent = parent
@@ -98,6 +98,21 @@ class CourseListWindow(customtkinter.CTkToplevel):
             error_message = f"{', '.join(error_fields)} {self.il8n.no_spaces_allowed}"
             msg.CTkMessagebox(title=self.il8n.error, message=error_message, icon="cancel")
             return
+        
+        # cant have the same course name and course code
+        if self.db.course_exists(new_name, new_code):
+            msg.CTkMessagebox(title=self.il8n.error, message=self.il8n.name_code_already_exists, icon="cancel")
+            return
+        
+        # cant have same course name
+        if self.db.course_name_exists(new_name):
+            msg.CTkMessagebox(title=self.il8n.error, message=self.il8n.course_name_already_exists, icon="cancel")
+            return
+        
+        # cant have same course code
+        if self.db.course_code_exists(new_code):
+            msg.CTkMessagebox(title=self.il8n.error, message=self.il8n.code_already_exists, icon="cancel")
+            return
 
         try:
             self.db.update_course(course_id, new_name, new_code, "")
@@ -106,7 +121,7 @@ class CourseListWindow(customtkinter.CTkToplevel):
             self.grab_release()
             edit_window.destroy()
         except sqlite3.Error as e:
-            messagebox.showerror(title=self.il8n.error, message=f"{self.il8n.failed_add_course}: {str(e)}")
+            messagebox.showerror(title=self.il8n.error, message=f"{self.il8n.failed_update_course}: {str(e)}")
 
     def delete_course(self, course_id):
         confirm = messagebox.askyesno(self.il8n.confirm_deletion, self.il8n.are_you_sure_delete_course)
@@ -118,3 +133,28 @@ class CourseListWindow(customtkinter.CTkToplevel):
                 self.grab_release()
             except sqlite3.Error as e:
                 messagebox.showerror(self.il8n.error, f"{self.il8n.failed_delete_course}: {str(e)}")
+
+    def update_language(self):
+        self.il8n = self.dashboard_window.il8n
+        self.title(self.il8n.show_list_title)
+        self.edit_course_title = self.il8n.edit_course_title
+        self.course_id = self.il8n.course_id
+        self.course_name = self.il8n.course_name
+        self.course_code = self.il8n.course_code
+        self.edit = self.il8n.edit
+        self.delete = self.il8n.delete
+        self.confirm_deletion = self.il8n.confirm_deletion
+        self.are_you_sure_delete_course = self.il8n.are_you_sure_delete_course
+        self.success = self.il8n.success
+        self.course_deleted_successfully = self.il8n.course_deleted_successfully
+        self.failed_delete_course = self.il8n.failed_delete_course
+        self.failed_update_course = self.il8n.failed_update_course
+        self.enter_required_fields = self.il8n.enter_required_fields
+        self.save_changes = self.il8n.save_changes
+        self.course_updated_success = self.il8n.course_updated_success
+        self.thanks = self.il8n.thanks
+        self.failed_update_course = self.il8n.failed_update_course
+        self.course_name_already_exists = self.il8n.course_name_already_exists
+        self.code_already_exists = self.il8n.code_already_exists
+        self.name_code_already_exists = self.il8n.name_code_already_exists
+        

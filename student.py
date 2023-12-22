@@ -6,14 +6,17 @@ import CTkMessagebox as msg
 import languagepack
 from student_list import StudentListWindow
 import sqlite3
-        
+from settings import SettingsWindow
 class StudentManagementWindow(ctk.CTkToplevel):
-    def __init__(self):
+    def __init__(self,dashboard_window):
         super().__init__()
+        self.dashboard_window = dashboard_window
+        self.il8n = self.dashboard_window.il8n
         self.geometry("900x650")
         self.il8n = languagepack.I18N(language='ar')
         self.title(self.il8n.student_management)
         self.grab_set()
+        
     
         # Student ID
         self.student_id_label = ctk.CTkLabel(self, text=self.il8n.student_id)
@@ -137,10 +140,38 @@ class StudentManagementWindow(ctk.CTkToplevel):
             msg.CTkMessagebox(title=self.il8n.error, message=f"{self.il8n.failed_add_student}:  {str(e)}", icon="cancel")
 
     def show_students_list(self):
-        student_list_window = StudentListWindow(self, self.db)
+        student_list_window = StudentListWindow(self, self.db,self.dashboard_window.selected_language)
         student_list_window.show_students_list()
         student_list_window.grab_set()
         student_list_window.wait_window()
        
+    
+    def update_language(self):
+        self.il8n = self.dashboard_window.il8n
+        self.title(self.il8n.student_management)
+        self.student_id_label.configure(text=self.il8n.student_id)
+        self.first_name_label.configure(text=self.il8n.first_name)
+        self.last_name_label.configure(text=self.il8n.last_name)
+        self.email_label.configure(text=self.il8n.email)
+        self.phone_label.configure(text=self.il8n.phone)
+        self.address_label.configure(text=self.il8n.address)
+        self.city_label.configure(text=self.il8n.city)
+        self.add_student_button.configure(text=self.il8n.add_student)
+        self.show_list_button.configure(text=self.il8n.show_list)
+        self.error_message = self.il8n.error
+        self.required_fields_message = self.il8n.required_fields
+        self.no_spaces_allowed_message = self.il8n.no_spaces_allowed
+        self.no_numbers_allowed_message = self.il8n.no_numbers_allowed
+        self.student_id_number_message = self.il8n.student_id_number
+        self.phone_number_message = self.il8n.phone_number
+        self.first_name_alpha_message = self.il8n.first_name_alpha
+        self.last_name_alpha_message = self.il8n.last_name_alpha
+        self.email_format_message = self.il8n.email_format
+        self.student_added_success_message = self.il8n.student_added_success
+        self.failed_add_student_message = self.il8n.failed_add_student
+        self.thanks_message = self.il8n.thanks
+        
+        
+
 
 

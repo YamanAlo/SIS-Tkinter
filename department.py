@@ -9,28 +9,21 @@ from tkinter import messagebox, Menu
 from department_list import DepartmentListWindow
 import sqlite3
 class DepartmentManagementWindow(customtkinter.CTkToplevel):
-    def __init__(self):
+    def __init__(self,dashboard_window):
         super().__init__()
-        self.il8n = languagepack.I18N(language='ar')
+        self.dashboard_window = dashboard_window
+        self.il8n = self.dashboard_window.il8n
         self.title(self.il8n.department_management)
         self.geometry("600x375")
         self.grab_set()
         self.db = StudentInfoSystem()
 
-        self.create_widgets()
 
-
-    def clear_entries(self):
-        self.department_name_entry.delete(0, 'end')
-        
-
-
-    def create_widgets(self):
         
 
         # student id 
-        student_label = customtkinter.CTkLabel(self, text=self.il8n.student_id )
-        student_label.pack(pady=5)
+        self.student_label = customtkinter.CTkLabel(self, text=self.il8n.student_id )
+        self.student_label.pack(pady=5)
 
         # Combobox for selecting student
         self.student_combobox = ttk.Combobox(self)
@@ -53,6 +46,10 @@ class DepartmentManagementWindow(customtkinter.CTkToplevel):
         self.show_departments_button.pack(pady=10)
 
        
+
+    def clear_entries(self):
+        self.department_name_entry.delete(0, 'end')
+        
     
     def populate_student_combobox(self):
         students = self.db.get_students()
@@ -61,7 +58,16 @@ class DepartmentManagementWindow(customtkinter.CTkToplevel):
 
     def add_department(self):
         department_name = self.department_name_entry.get()
-        student_id = self.student_combobox.get()
+        student_id = self.student_combobox.get()    
+
+        if self.db.get_department_by_name(department_name, student_id):
+            msg.CTkMessagebox(title=self.il8n.error, message=f"{self.il8n.department_already_exists}", icon="cancel")
+            return
+        
+
+        if self.db.get_department_by_student_id(student_id):
+            msg.CTkMessagebox(title=self.il8n.error, message=f"{self.il8n.department_already_exists_for_student}", icon="cancel")
+            return
 
         if not department_name or not student_id:
             msg.CTkMessagebox(title=self.il8n.error, message=self.il8n.enter_required_fields, icon="cancel")
@@ -91,7 +97,28 @@ class DepartmentManagementWindow(customtkinter.CTkToplevel):
 
     def show_departments(self):
         
-        department_list_window = DepartmentListWindow(self, self.db)
+        department_list_window = DepartmentListWindow(self, self.db,self.dashboard_window.selected_language)
         department_list_window.show_departments()
         department_list_window.grab_set()
         department_list_window.wait_window()
+
+    def update_language(self):
+        self.il8n = self.dashboard_window.il8n
+        self.title(self.il8n.department_management)
+        self.student_label.configure(text=self.il8n.student_id)
+        self.add_department_label.configure(text=self.il8n.add_department)
+        self.add_department_button.configure(text=self.il8n.add_department)
+        self.show_departments_button.configure(text=self.il8n.show_departments)
+        self.student_combobox.set(self.il8n.select_student_id)
+        self.add_department_label.configure(text=self.il8n.add_department)
+        self.department_name_entry.configure(text=self.il8n.department_name)
+        self.error_message = self.il8n.error
+        self.required_fields_message = self.il8n.enter_required_fields
+        self.no_numbers_allowed_message = self.il8n.no_numbers
+        self.department_added_success_message = self.il8n.department_added_success
+        self.failed_add_department_message = self.il8n.failed_add_department
+        self.thanks = self.il8n.thanks
+        self.success = self.il8n.success
+        self.department_already_exists = self.il8n.department_already_exists
+        self.no_spaces_allowed = self.il8n.no_spaces_allowed
+        self.department_already_exists_for_student = self.il8n.department_already_exists_for_student

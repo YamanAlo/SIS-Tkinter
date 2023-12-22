@@ -1,7 +1,9 @@
+# settings.py
 import customtkinter
 from tkinter import messagebox
 import languagepack
 import CTkMessagebox as msg
+
 
 class SettingsWindow(customtkinter.CTkToplevel):
     def __init__(self, dashboard_window):
@@ -10,9 +12,10 @@ class SettingsWindow(customtkinter.CTkToplevel):
         self.title(self.il8n.settings)
         self.geometry("400x150")
         self.dashboard_window = dashboard_window
+        # self.course_management_window = course_management_window
+        # self.department_management_window = department_management_window
         self.grab_set()
-        
-        
+
         language_options = [self.il8n.english, self.il8n.arabic, self.il8n.turkish]
         self.language_selector = customtkinter.CTkComboBox(self, values=language_options)
         self.language_selector.pack(pady=10)
@@ -30,8 +33,13 @@ class SettingsWindow(customtkinter.CTkToplevel):
         elif language == self.il8n.arabic:
             language = "ar"
         else:
-            language = "en"
+            msg.CTkMessagebox(title=self.il8n.error, message=f"Unsupported language: {language}", icon="cancel")
+            return
 
         self.dashboard_window.update_language(language)
-
+        
         msg.CTkMessagebox(title=self.il8n.settings, message=f"{self.il8n.language_set_to} {language}", icon="check", option_1=self.il8n.thanks)
+
+        
+
+       

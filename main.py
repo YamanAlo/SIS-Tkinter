@@ -10,14 +10,15 @@ from settings import SettingsWindow
 import database
 import languagepack
 
+
 class DashboardWindow(customtkinter.CTk):
     def __init__(self):
         super().__init__()
         self.geometry("600x350")
         self.db = database.StudentInfoSystem()
-        self.il8n = languagepack.I18N(language='en')  # Default language is set to English
+        self.selected_language = 'en'  # Default language
+        self.il8n = languagepack.I18N(language=self.selected_language)  # Default language is set to English
         self.title(self.il8n.dashboard)
-        
         
         self.create_widgets()
 
@@ -65,18 +66,24 @@ class DashboardWindow(customtkinter.CTk):
         self.sm1 = customtkinter.CTkSwitch(self, text=self.il8n.Switch_Theme, variable=sm1_value, command=self.set_apperance)
         self.sm1.pack(pady=10)
     
-
+    def open_settings(self):
+        
+        self.settings_window = SettingsWindow(self)
 
     def open_student_mgmt(self):
-        self.student_mgmt_window = StudentManagementWindow()
-        
+        self.student_mgmt_window = StudentManagementWindow(self)    
+        self.student_mgmt_window.update_language()
+    
+
+
     def open_course_mgmt(self):
-        self.course_mgmt_window = CourseManagementWindow()
-        
+        self.course_mgmt_window = CourseManagementWindow(self)
+        self.course_mgmt_window.update_language()
 
 
     def open_dept_mgmt(self):
-        self.dept_mgmt_window = DepartmentManagementWindow()
+        self.dept_mgmt_window = DepartmentManagementWindow(self)
+        self.dept_mgmt_window.update_language()
         
 
     def create_db(self):
@@ -84,7 +91,7 @@ class DashboardWindow(customtkinter.CTk):
             self.db.create_database()
             msg.CTkMessagebox(title=self.il8n.database_info, message=self.il8n.database_created, icon="check", option_1=self.il8n.thanks)
         except sqlite3.Error as err:
-            msg.CTkMessagebox(title=self.il8n.database_info, message=self.il8n.failed_create_database, icon="cancel" + str(err))
+            msg.CTkMessagebox(title=self.il8n.database_info,message= f"{self.il8n.failed_clear_database}: {err}", icon="cancel" )
         
 
     def clear_db(self):
@@ -92,13 +99,14 @@ class DashboardWindow(customtkinter.CTk):
             self.db.clear_database()
             msg.CTkMessagebox(title=self.il8n.database_info, message=self.il8n.clear_database, icon="check", option_1=self.il8n.thanks)
         except sqlite3.Error as err:
-            msg.CTkMessagebox(title=self.il8n.database_info, message=self.il8n.failed_clear_database, icon="cancel" + str(err))
+            msg.CTkMessagebox(title=self.il8n.database_info, message=f"{self.il8n.failed_clear_database}: {err}" , icon="cancel")
 
-    def open_settings(self):
-        self.settings_window = SettingsWindow(self)
+   
 
     def update_language(self, language):
-        self.il8n = languagepack.I18N(language=language)
+        
+        self.selected_language = language
+        self.il8n = languagepack.I18N(language=self.selected_language)
         self.title(self.il8n.dashboard)
         self.create_db_button.configure(text=self.il8n.create_database)
         self.student_mgmt_button.configure(text=self.il8n.student_management)
@@ -107,6 +115,8 @@ class DashboardWindow(customtkinter.CTk):
         self.settings_button.configure(text=self.il8n.settings)
         self.dept_mgmt_button.configure(text=self.il8n.department_management)
         self.sm1.configure(text=self.il8n.Switch_Theme)
+
+    
 
       
        
