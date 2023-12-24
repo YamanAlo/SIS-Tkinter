@@ -99,3 +99,5 @@ course_name_already_exists=Ders adı zaten var
 code_already_exists=Ders kodu zaten var
 department_already_exists_for_student=Bu öğrenci için bölüm zaten var
 deleted_student_success=Öğrenci başarıyla silindi
+course_already_exists=Öğrenci bu dersi zaten almış
+student_list=Öğrenci Listesi

@@ -33,6 +33,7 @@ class I18N:
     def load_data_in_arabic(self):
         return
     
+    
     def load_data_from_file(self, language):
         language_data = {}
         language_file = f'data_{language}.lng'
@@ -142,7 +143,10 @@ class I18N:
         self.name_code_already_exists = language_data['name_code_already_exists']
         self.department_already_exists_for_student = language_data['department_already_exists_for_student']
         self.deleted_student_success = language_data['deleted_student_success']
-        
+        self.course_already_exists = language_data['course_already_exists']
+        self.student_list = language_data['student_list']
+
+
     @staticmethod
     def get_available_languages():
         language_files = glob.glob("*.lng")

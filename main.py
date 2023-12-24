@@ -9,7 +9,7 @@ from department import DepartmentManagementWindow
 from settings import SettingsWindow
 import database
 import languagepack
-
+from CTkTable import *
 
 class DashboardWindow(customtkinter.CTk):
     def __init__(self):
@@ -51,6 +51,12 @@ class DashboardWindow(customtkinter.CTk):
         self.dept_mgmt_button.pack(pady=10)
         self.dept_mgmt_button.configure(font=("Arial ",13))
 
+        # button for showing the list of students with their courses and departments
+        self.show_list_button = customtkinter.CTkButton(self, text=self.il8n.show_list, command=self.show_list)
+        self.show_list_button.pack(pady=10)
+        self.show_list_button.configure(font=("Arial ",13))
+
+
         # Button for Clear Database
         self.clear_db_button = customtkinter.CTkButton(self, text=self.il8n.clear_database, command=self.clear_db)
         self.clear_db_button.pack(pady=10)
@@ -84,11 +90,25 @@ class DashboardWindow(customtkinter.CTk):
     def open_dept_mgmt(self):
         self.dept_mgmt_window = DepartmentManagementWindow(self)
         self.dept_mgmt_window.update_language()
-        
+    
+    # Show the list of students id with their courses and departments in a new window by calling the show_list method from database.py
 
+    def show_list(self):
+        
+        self.show_list_window = customtkinter.CTkToplevel(self)
+        self.show_list_window.title(self.il8n.show_list)
+        self.show_list_window.geometry("600x400")
+        
+        value = self.db.show_list()
+        headers = [f'{self.il8n.student_id}', f'{self.il8n.course_name}',f'{self.il8n.course_code}', f'{self.il8n.department_name}']
+        rows = len(value)
+
+        # Create a CTkTable with headers
+        table = CTkTable(self.show_list_window, column=4, row=rows + 1, values=[headers] + value)
+        table.pack(pady=10)
     def create_db(self):
         try:
-            self.db.create_database()
+            self.db.create_atabase()
             msg.CTkMessagebox(title=self.il8n.database_info, message=self.il8n.database_created, icon="check", option_1=self.il8n.thanks)
         except sqlite3.Error as err:
             msg.CTkMessagebox(title=self.il8n.database_info,message= f"{self.il8n.failed_clear_database}: {err}", icon="cancel" )
@@ -115,6 +135,8 @@ class DashboardWindow(customtkinter.CTk):
         self.settings_button.configure(text=self.il8n.settings)
         self.dept_mgmt_button.configure(text=self.il8n.department_management)
         self.sm1.configure(text=self.il8n.Switch_Theme)
+        self.show_list_button.configure(text=self.il8n.show_list)
+
 
     
 

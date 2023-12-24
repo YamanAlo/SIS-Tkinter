@@ -99,3 +99,5 @@ course_name_already_exists= بالفعل موجود اسم المقرر
 code_already_exists=بالفعل موجود رمز المقرر
 department_already_exists_for_student=الطالب لهذا بالفعل موجود القسم
 deleted_student_success=تم حذف الطالب بنجاح
+course_already_exists=الطالب مسجل بالفعل في هذه الدورة
+student_list=قائمة الطلاب

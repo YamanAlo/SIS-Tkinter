@@ -99,3 +99,5 @@ course_name_already_exists=Course name already exists
 code_already_exists=Course code already exists
 department_already_exists_for_student=Department already exists for this student
 deleted_student_success=Student deleted successfully
+course_already_exists=Student already enrolled in this course
+student_list=Student List

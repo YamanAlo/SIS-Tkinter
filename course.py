@@ -13,10 +13,21 @@ class CourseManagementWindow(customtkinter.CTkToplevel):
         self.dashboard_window = dashboard_window
         self.il8n = self.dashboard_window.il8n
         self.title(self.il8n.course_management)
-        self.geometry("600x375")
+        self.geometry("600x400")
         self.grab_set()
+        self.db = StudentInfoSystem()
 
-        
+        # student id
+        self.student_label = customtkinter.CTkLabel(self, text=self.il8n.student_id)
+        self.student_label.pack(pady=5)
+
+        # Combobox for selecting student
+        self.student_combobox = ttk.Combobox(self)
+        self.student_combobox.set(self.il8n.select_student_id)
+        self.student_combobox.pack(pady=5)
+        self.populate_student_combobox()
+
+
         self.course_name_label = customtkinter.CTkLabel(self, text= self.il8n.course_name)
         self.course_name_label.pack(pady=10)
         self.course_name_entry = customtkinter.CTkEntry(self)
@@ -33,31 +44,42 @@ class CourseManagementWindow(customtkinter.CTkToplevel):
         self.show_list_button = customtkinter.CTkButton(self, text=self.il8n.show_list, command=self.show_course_list)
         self.show_list_button.pack(pady=20)
 
-        self.db = StudentInfoSystem() 
+        
 
 
     def clear_entries(self):
         self.course_name_entry.delete(0, 'end')
         self.course_code_entry.delete(0, 'end')
 
+    def populate_student_combobox(self):
+        students = self.db.get_students()
+        student_ids = [str(student[0]) for student in students]
+        self.student_combobox['values'] = ["Select Student ID"] + student_ids
 
     def add_course(self):
         course_name = self.course_name_entry.get()
         course_code = self.course_code_entry.get()
+        student_id = self.student_combobox.get()
 
-    
-        if self.db.course_exists(course_name, course_code):
-            msg.CTkMessagebox(title=self.il8n.error, message=self.il8n.name_code_already_exists, icon="cancel")
+
+        # student cant have the same course twice
+        if self.db.course_exists(course_name, course_code, student_id):
+            msg.CTkMessagebox(title=self.il8n.error, message=self.il8n.course_already_exists, icon="cancel")
             return
+
+
+        # if self.db.course_exists(course_name, course_code):
+        #     msg.CTkMessagebox(title=self.il8n.error, message=self.il8n.name_code_already_exists, icon="cancel")
+        #     return
         
-        if self.db.course_name_exists(course_name):
-            msg.CTkMessagebox(title=self.il8n.error, message=self.il8n.course_name_already_exists, icon="cancel")
-            return
+        # if self.db.course_name_exists(course_name):
+        #     msg.CTkMessagebox(title=self.il8n.error, message=self.il8n.course_name_already_exists, icon="cancel")
+        #     return
         
         
-        if self.db.course_code_exists(course_code):
-            msg.CTkMessagebox(title=self.il8n.error, message=self.il8n.code_already_exists, icon="cancel")
-            return
+        # if self.db.course_code_exists(course_code):
+        #     msg.CTkMessagebox(title=self.il8n.error, message=self.il8n.code_already_exists, icon="cancel")
+        #     return
 
         if not course_name or not course_code:
             msg.CTkMessagebox(title=self.il8n.error, message=self.il8n.enter_required_fields, icon="cancel")
@@ -67,14 +89,13 @@ class CourseManagementWindow(customtkinter.CTkToplevel):
             msg.CTkMessagebox(title=self.il8n.error, message=f"{self.il8n.course_name}{self.il8n.no_numbers}", icon="cancel")
             return
         
-        # no spaces in both course name and course code
-        if any(char.isspace() for char in course_name + course_code ):
-            error_fields = [field for field, value in {"Course Name": course_name, "Course Code": course_code}.items() if any(char.isspace() for char in value)]
-            error_message = f"{', '.join(error_fields)} {self.il8n.no_spaces_allowed}"
-            msg.CTkMessagebox(title=self.il8n.error, message=error_message, icon="cancel")
+        # no spaces in course code
+        if " " in course_code:
+            msg.CTkMessagebox(title=self.il8n.error, message=f"{self.il8n.course_code}{self.il8n.no_spaces_allowed}", icon="cancel")
             return
+        
         try:
-            self.db.add_course(course_name, course_code, "")
+            self.db.add_course(course_name, course_code, student_id)
             self.clear_entries()
             self.course_name_entry.focus()
             msg.CTkMessagebox(title=self.il8n.success, message=self.il8n.course_added_success, icon="check", option_1=self.il8n.thanks)
@@ -94,6 +115,7 @@ class CourseManagementWindow(customtkinter.CTkToplevel):
         self.course_code_label.configure(text=self.il8n.course_code)
         self.add_course_button.configure(text=self.il8n.add_course)
         self.show_list_button.configure(text=self.il8n.show_list)
+        self.student_label.configure(text=self.il8n.student_id)
         self.error_message = self.il8n.error
         self.required_fields_message = self.il8n.enter_required_fields
         self.no_spaces_allowed_message = self.il8n.no_spaces_allowed
@@ -106,6 +128,7 @@ class CourseManagementWindow(customtkinter.CTkToplevel):
         self.course_name_already_exists_message = self.il8n.course_name_already_exists
         self.code_already_exists_message = self.il8n.code_already_exists
         self.name_code_already_exists_message = self.il8n.name_code_already_exists
+        self.course_already_exists_message = self.il8n.course_already_exists
 
 
 

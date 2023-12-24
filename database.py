@@ -1,5 +1,5 @@
 import sqlite3
-
+import languagepack
 class StudentInfoSystem:
     def __init__(self):
         self.conn = None
@@ -7,7 +7,7 @@ class StudentInfoSystem:
 
     @staticmethod
     def connect():
-        return sqlite3.connect('StudentInfoSystem.db')
+        return sqlite3.connect('SIS.db')
 
     def __enter__(self):
         self.conn = self.connect()
@@ -37,8 +37,9 @@ class StudentInfoSystem:
         query = '''CREATE TABLE IF NOT EXISTS courses (
             course_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,
             course_name TEXT NOT NULL,
-            course_code TEXT NOT NULL,
-            course_description TEXT)'''
+            course_code TEXT NOT NULL, 
+            student_id INTEGER,
+            FOREIGN KEY (student_id) REFERENCES student (student_id))'''
         self.cursor.execute(query)
 
         query = '''CREATE TABLE IF NOT EXISTS department (
@@ -67,6 +68,16 @@ class StudentInfoSystem:
         self.conn.commit()
         self.conn.close()
         
+    # show the list of students with their courses and departments in a new window
+    def show_list(self):
+        self.conn = self.connect()
+        self.cursor = self.conn.cursor()
+        self.cursor.execute("SELECT student.student_id, courses.course_name, courses.course_code, department.department_name FROM student LEFT JOIN courses ON student.student_id = courses.student_id LEFT JOIN department ON student.student_id = department.student_id")
+        rows = self.cursor.fetchall()
+        self.conn.close()
+        return rows
+        
+
 
 
     def add_student(self, student_id ,first_name, last_name, email, phone, address, city):
@@ -77,10 +88,10 @@ class StudentInfoSystem:
         self.conn.close()
 
 
-    def add_course(self, course_name, course_code, course_description):
+    def add_course(self, course_name, course_code,student_id):
         self.conn = self.connect()
         self.cursor = self.conn.cursor()
-        self.cursor.execute("INSERT INTO courses VALUES (NULL, ?, ?, ?)", (course_name, course_code, course_description))
+        self.cursor.execute("INSERT INTO courses VALUES (NULL, ?, ?, ?)", (course_name, course_code,student_id))
         self.conn.commit()
         self.conn.close()
 
@@ -128,37 +139,38 @@ class StudentInfoSystem:
         self.conn.commit()
         self.conn.close()
 
-    def update_course(self, course_id, course_name, course_code, course_description):
+    def update_course(self, course_id, course_name, course_code, student_id):
         self.conn = self.connect()
         self.cursor = self.conn.cursor()
-        self.cursor.execute("UPDATE courses SET course_name=?, course_code=?, course_description=? WHERE course_id=?", (course_name, course_code, course_description, course_id))
+        self.cursor.execute("UPDATE courses SET course_name=?, course_code=?, student_id=? WHERE course_id=?", (course_name, course_code, student_id, course_id))
         self.conn.commit()
         self.conn.close()
-    
-    def course_exists(self, course_name, course_code):
-        self.conn = self.connect()
-        self.cursor = self.conn.cursor()
-        self.cursor.execute("SELECT * FROM courses WHERE course_name=? AND course_code=?", (course_name, course_code))
-        rows = self.cursor.fetchall()
-        self.conn.close()
-        return rows
-    
-    def course_name_exists(self, course_name):
-        self.conn = self.connect()
-        self.cursor = self.conn.cursor()
-        self.cursor.execute("SELECT * FROM courses WHERE course_name=?", (course_name,))
-        rows = self.cursor.fetchall()
-        self.conn.close()
-        return rows
 
-    def course_code_exists(self, course_code):
+    def course_exists(self, course_name, course_code, student_id):
         self.conn = self.connect()
         self.cursor = self.conn.cursor()
-        self.cursor.execute("SELECT * FROM courses WHERE course_code=?", (course_code,))
+        self.cursor.execute("SELECT * FROM courses WHERE course_name=? AND course_code=? AND student_id=?", (course_name, course_code, student_id))
         rows = self.cursor.fetchall()
         self.conn.close()
         return rows
-        
+    
+    # def course_name_exists(self, course_name):
+    #     self.conn = self.connect()
+    #     self.cursor = self.conn.cursor()
+    #     self.cursor.execute("SELECT * FROM courses WHERE course_name=?", (course_name,))
+    #     rows = self.cursor.fetchall()
+    #     self.conn.close()
+    #     return rows
+
+    # def course_code_exists(self, course_code):
+    #     self.conn = self.connect()
+    #     self.cursor = self.conn.cursor()
+    #     self.cursor.execute("SELECT * FROM courses WHERE course_code=?", (course_code,))
+    #     rows = self.cursor.fetchall()
+    #     self.conn.close()
+    #     return rows
+
+
     def add_department(self, department_name,student_id):
         self.conn = self.connect()
         self.cursor = self.conn.cursor()

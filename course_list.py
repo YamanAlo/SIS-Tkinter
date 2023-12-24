@@ -4,14 +4,15 @@ import sqlite3
 import CTkMessagebox as msg
 import languagepack
 import customtkinter
-
+import tkinter as tk
+from tkinter import ttk
 
 class CourseListWindow(customtkinter.CTkToplevel):
     def __init__(self, parent, db, language):
         super().__init__(parent)
         self.il8n = languagepack.I18N(language=language)
         self.title(self.il8n.show_list_title)
-        self.geometry("400x300")
+        self.geometry("500x300")
         self.parent = parent
         self.db = db
 
@@ -28,7 +29,7 @@ class CourseListWindow(customtkinter.CTkToplevel):
 
         courses = self.db.get_courses()
         for course in courses:
-            label_text = f"{self.il8n.course_id}: {course[0]}, {self.il8n.course_name}: {course[1]}, {self.il8n.course_code}: {course[2]}"
+            label_text = f"{self.il8n.course_id}: {course[0]}, {self.il8n.course_name}: {course[1]}, {self.il8n.course_code}: {course[2]}, {self.il8n.student_id}: {course[3]}"
             label = customtkinter.CTkLabel(self.course_list_frame, text=label_text)
             label.bind("<Button-3>", lambda event, id=course[0]: self.show_context_menu(event, id))
             label.pack()
@@ -52,11 +53,19 @@ class CourseListWindow(customtkinter.CTkToplevel):
         
             edit_window = customtkinter.CTkToplevel(self)
             edit_window.title(self.il8n.edit_course_title)
-            edit_window.geometry("750x200")
+            edit_window.geometry("850x200")
             edit_window.grab_set()
 
             entry_frame = customtkinter.CTkFrame(edit_window)
             entry_frame.pack(pady=10)
+
+            student_id_label = customtkinter.CTkLabel(entry_frame, text=f"{self.il8n.student_id}")
+            student_id_label.pack(side='left', padx=5)
+            student_id_combobox = ttk.Combobox(entry_frame)
+            student_id_combobox['values'] = [str(student[0]) for student in self.db.get_students()]            
+            student_id_combobox.set(self.il8n.select_student_id)
+            student_id_combobox.pack(side='left', padx=5)
+        
 
             course_id_label = customtkinter.CTkLabel(entry_frame, text=f"{self.il8n.course_id}")
             course_id_label.pack(side='left', padx=5)
@@ -77,15 +86,16 @@ class CourseListWindow(customtkinter.CTkToplevel):
             new_code_entry.insert(0, selected_course[2])
             new_code_entry.pack(side='left', padx=5)
             save_button = customtkinter.CTkButton(edit_window, text=self.il8n.save_changes,
-                                      command=lambda: (lambda: self.save_changes(edit_window, course_id,
+                                      command=lambda: self.save_changes(edit_window, course_id,
                                                                                  new_name_entry.get(),
-                                                                                 new_code_entry.get()))())
+                                                                                 new_code_entry.get(),
+                                                                                 student_id_combobox.get()))
             save_button.pack(pady=10)
 
             
 
-    def save_changes(self, edit_window, course_id, new_name, new_code):
-        if not new_name or not new_code:
+    def save_changes(self, edit_window, course_id, new_name, new_code, new_student_id):
+        if not new_name or not new_code or not new_student_id:
             msg.CTkMessagebox(title=self.il8n.error, message=self.il8n.enter_required_fields, icon="cancel")
             return
 
@@ -93,29 +103,30 @@ class CourseListWindow(customtkinter.CTkToplevel):
             msg.CTkMessagebox(title=self.il8n.error, message=f"{self.il8n.course_name}{self.il8n.no_numbers}", icon="cancel")
             return
         
-        if any(char.isspace() for char in new_name + new_code ):
-            error_fields = [field for field, value in {"Course Name": new_name, "Course Code": new_code}.items() if any(char.isspace() for char in value)]
-            error_message = f"{', '.join(error_fields)} {self.il8n.no_spaces_allowed}"
-            msg.CTkMessagebox(title=self.il8n.error, message=error_message, icon="cancel")
+        # no spaces in course code
+        if " " in new_code:
+            msg.CTkMessagebox(title=self.il8n.error, message=f"{self.il8n.course_code}{self.il8n.no_spaces_allowed}", icon="cancel")
             return
+        
+        
         
         # cant have the same course name and course code
-        if self.db.course_exists(new_name, new_code):
-            msg.CTkMessagebox(title=self.il8n.error, message=self.il8n.name_code_already_exists, icon="cancel")
-            return
+        # if self.db.course_exists(new_name, new_code):
+        #     msg.CTkMessagebox(title=self.il8n.error, message=self.il8n.name_code_already_exists, icon="cancel")
+        #     return
         
-        # cant have same course name
-        if self.db.course_name_exists(new_name):
-            msg.CTkMessagebox(title=self.il8n.error, message=self.il8n.course_name_already_exists, icon="cancel")
-            return
+        # # cant have same course name
+        # if self.db.course_name_exists(new_name):
+        #     msg.CTkMessagebox(title=self.il8n.error, message=self.il8n.course_name_already_exists, icon="cancel")
+        #     return
         
-        # cant have same course code
-        if self.db.course_code_exists(new_code):
-            msg.CTkMessagebox(title=self.il8n.error, message=self.il8n.code_already_exists, icon="cancel")
-            return
+        # # cant have same course code
+        # if self.db.course_code_exists(new_code):
+        #     msg.CTkMessagebox(title=self.il8n.error, message=self.il8n.code_already_exists, icon="cancel")
+        #     return
 
         try:
-            self.db.update_course(course_id, new_name, new_code, "")
+            self.db.update_course(course_id, new_name, new_code, new_student_id)
             msg.CTkMessagebox(title=self.il8n.success, message=self.il8n.course_updated_success, icon="check", option_1=self.il8n.thanks)
             self.show_course_list()
             self.grab_release()
@@ -157,4 +168,7 @@ class CourseListWindow(customtkinter.CTkToplevel):
         self.course_name_already_exists = self.il8n.course_name_already_exists
         self.code_already_exists = self.il8n.code_already_exists
         self.name_code_already_exists = self.il8n.name_code_already_exists
+        self.select_student_id = self.il8n.select_student_id
+        self.no_spaces_allowed = self.il8n.no_spaces_allowed
+        self.no_numbers = self.il8n.no_numbers
         
