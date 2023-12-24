@@ -68,7 +68,7 @@ class StudentInfoSystem:
         self.conn.commit()
         self.conn.close()
         
-    # show the list of students with their courses and departments in a new window
+
     def show_list(self):
         self.conn = self.connect()
         self.cursor = self.conn.cursor()
@@ -154,22 +154,6 @@ class StudentInfoSystem:
         self.conn.close()
         return rows
     
-    # def course_name_exists(self, course_name):
-    #     self.conn = self.connect()
-    #     self.cursor = self.conn.cursor()
-    #     self.cursor.execute("SELECT * FROM courses WHERE course_name=?", (course_name,))
-    #     rows = self.cursor.fetchall()
-    #     self.conn.close()
-    #     return rows
-
-    # def course_code_exists(self, course_code):
-    #     self.conn = self.connect()
-    #     self.cursor = self.conn.cursor()
-    #     self.cursor.execute("SELECT * FROM courses WHERE course_code=?", (course_code,))
-    #     rows = self.cursor.fetchall()
-    #     self.conn.close()
-    #     return rows
-
 
     def add_department(self, department_name,student_id):
         self.conn = self.connect()

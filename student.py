@@ -6,7 +6,7 @@ import CTkMessagebox as msg
 import languagepack
 from student_list import StudentListWindow
 import sqlite3
-from settings import SettingsWindow
+
 class StudentManagementWindow(ctk.CTkToplevel):
     def __init__(self,dashboard_window):
         super().__init__()
@@ -68,7 +68,7 @@ class StudentManagementWindow(ctk.CTkToplevel):
         self.show_list_button = ctk.CTkButton(self, text=self.il8n.show_list, command=self.show_students_list)
         self.show_list_button.pack(pady=10)
 
-        # Create the database connection
+       
         self.db = StudentInfoSystem()
 
 

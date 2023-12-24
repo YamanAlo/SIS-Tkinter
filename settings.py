@@ -12,8 +12,8 @@ class SettingsWindow(customtkinter.CTkToplevel):
         self.title(self.il8n.settings)
         self.geometry("400x150")
         self.dashboard_window = dashboard_window
-        # self.course_management_window = course_management_window
-        # self.department_management_window = department_management_window
+        self.resizable(False, False)
+       
         self.grab_set()
 
         language_options = [self.il8n.english, self.il8n.arabic, self.il8n.turkish]

@@ -17,7 +17,7 @@ class DepartmentManagementWindow(customtkinter.CTkToplevel):
         self.geometry("600x375")
         self.grab_set()
         self.db = StudentInfoSystem()
-
+        self.resizable(False, False)
 
         
 

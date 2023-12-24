@@ -14,11 +14,12 @@ from CTkTable import *
 class DashboardWindow(customtkinter.CTk):
     def __init__(self):
         super().__init__()
-        self.geometry("600x350")
+        self.geometry("600x400")
         self.db = database.StudentInfoSystem()
-        self.selected_language = 'en'  # Default language
-        self.il8n = languagepack.I18N(language=self.selected_language)  # Default language is set to English
+        self.selected_language = 'en' 
+        self.il8n = languagepack.I18N(language=self.selected_language)  
         self.title(self.il8n.dashboard)
+        self.resizable(False, False)
         
         self.create_widgets()
 
@@ -91,13 +92,14 @@ class DashboardWindow(customtkinter.CTk):
         self.dept_mgmt_window = DepartmentManagementWindow(self)
         self.dept_mgmt_window.update_language()
     
-    # Show the list of students id with their courses and departments in a new window by calling the show_list method from database.py
+    
 
     def show_list(self):
         
         self.show_list_window = customtkinter.CTkToplevel(self)
         self.show_list_window.title(self.il8n.show_list)
         self.show_list_window.geometry("600x400")
+
         
         value = self.db.show_list()
         headers = [f'{self.il8n.student_id}', f'{self.il8n.course_name}',f'{self.il8n.course_code}', f'{self.il8n.department_name}']
@@ -105,10 +107,11 @@ class DashboardWindow(customtkinter.CTk):
 
         # Create a CTkTable with headers
         table = CTkTable(self.show_list_window, column=4, row=rows + 1, values=[headers] + value)
-        table.pack(pady=10)
+        table.pack(pady=10,fill = 'both')
+
     def create_db(self):
         try:
-            self.db.create_atabase()
+            self.db.create_database()
             msg.CTkMessagebox(title=self.il8n.database_info, message=self.il8n.database_created, icon="check", option_1=self.il8n.thanks)
         except sqlite3.Error as err:
             msg.CTkMessagebox(title=self.il8n.database_info,message= f"{self.il8n.failed_clear_database}: {err}", icon="cancel" )

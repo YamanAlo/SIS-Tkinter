@@ -66,7 +66,7 @@ class DepartmentListWindow(customtkinter.CTkToplevel):
             new_dept_entry.insert(0, selected_department[1])  
             new_dept_entry.pack(side='left', padx=5)
 
-            # show the student ids that are in the database in a combobox
+            
             student_id_label = customtkinter.CTkLabel(entry_frame, text=self.il8n.edit_student_id)
             student_id_label.pack(side='left', padx=5)
             new_student_id_combobox = ttk.Combobox(entry_frame)

@@ -134,14 +134,14 @@ class StudentListWindow(ctk.CTkToplevel):
         
         
 
-        # Validate (no numbers allowed)
+        
         if any(char.isdigit() for char in first_name + last_name + email + address + city):
             error_fields = [field for field, value in {"First Name": first_name, "Last Name": last_name,  "Address": address, "City": city}.items() if any(char.isdigit() for char in value)]
             error_message = f"{', '.join(error_fields)} {self.il8n.no_numbers_allowed}"
             msg.CTkMessagebox(title=self.il8n.error, message=error_message , icon="cancel")
             return
 
-        # Validate (no spaces allowed)
+        
 
         if any(char.isspace() for char in student_id + first_name + last_name + email + phone + address + city):
             error_fields = [field for field, value in {"Student ID": student_id, "First Name": first_name, "Last Name": last_name, "Email": email, "Phone": phone, "Address": address, "City": city}.items() if any(char.isspace() for char in value)]

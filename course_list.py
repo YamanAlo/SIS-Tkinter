@@ -18,7 +18,6 @@ class CourseListWindow(customtkinter.CTkToplevel):
 
 
 
-
         self.course_list_frame = customtkinter.CTkFrame(self)
         self.course_list_frame.pack(pady=20)
         
@@ -108,22 +107,6 @@ class CourseListWindow(customtkinter.CTkToplevel):
             msg.CTkMessagebox(title=self.il8n.error, message=f"{self.il8n.course_code}{self.il8n.no_spaces_allowed}", icon="cancel")
             return
         
-        
-        
-        # cant have the same course name and course code
-        # if self.db.course_exists(new_name, new_code):
-        #     msg.CTkMessagebox(title=self.il8n.error, message=self.il8n.name_code_already_exists, icon="cancel")
-        #     return
-        
-        # # cant have same course name
-        # if self.db.course_name_exists(new_name):
-        #     msg.CTkMessagebox(title=self.il8n.error, message=self.il8n.course_name_already_exists, icon="cancel")
-        #     return
-        
-        # # cant have same course code
-        # if self.db.course_code_exists(new_code):
-        #     msg.CTkMessagebox(title=self.il8n.error, message=self.il8n.code_already_exists, icon="cancel")
-        #     return
 
         try:
             self.db.update_course(course_id, new_name, new_code, new_student_id)

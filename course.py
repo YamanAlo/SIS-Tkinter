@@ -16,12 +16,14 @@ class CourseManagementWindow(customtkinter.CTkToplevel):
         self.geometry("600x400")
         self.grab_set()
         self.db = StudentInfoSystem()
+        self.resizable(False, False)
 
-        # student id
+
+       
         self.student_label = customtkinter.CTkLabel(self, text=self.il8n.student_id)
         self.student_label.pack(pady=5)
 
-        # Combobox for selecting student
+        
         self.student_combobox = ttk.Combobox(self)
         self.student_combobox.set(self.il8n.select_student_id)
         self.student_combobox.pack(pady=5)
@@ -62,24 +64,10 @@ class CourseManagementWindow(customtkinter.CTkToplevel):
         student_id = self.student_combobox.get()
 
 
-        # student cant have the same course twice
+        
         if self.db.course_exists(course_name, course_code, student_id):
             msg.CTkMessagebox(title=self.il8n.error, message=self.il8n.course_already_exists, icon="cancel")
             return
-
-
-        # if self.db.course_exists(course_name, course_code):
-        #     msg.CTkMessagebox(title=self.il8n.error, message=self.il8n.name_code_already_exists, icon="cancel")
-        #     return
-        
-        # if self.db.course_name_exists(course_name):
-        #     msg.CTkMessagebox(title=self.il8n.error, message=self.il8n.course_name_already_exists, icon="cancel")
-        #     return
-        
-        
-        # if self.db.course_code_exists(course_code):
-        #     msg.CTkMessagebox(title=self.il8n.error, message=self.il8n.code_already_exists, icon="cancel")
-        #     return
 
         if not course_name or not course_code:
             msg.CTkMessagebox(title=self.il8n.error, message=self.il8n.enter_required_fields, icon="cancel")
